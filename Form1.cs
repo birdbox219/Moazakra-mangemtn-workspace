@@ -19,6 +19,10 @@ namespace WindowsFormsApp1
         private FormsRouter _formRouter;
 
         public event EventHandler OnMemberButtonClikced;
+        public event EventHandler OnWorkspacesButtonClicked;
+        public event EventHandler OnReservationsButtonClicked;
+        public event EventHandler OnEquipmentButtonClicked;
+        public event EventHandler OnReportsButtonClicked;
         public Form1()
         {
             InitializeComponent();
@@ -45,6 +49,33 @@ namespace WindowsFormsApp1
         private void btnMembers_Click(object sender, EventArgs e)
         {
             OnMemberButtonClikced?.Invoke(this, EventArgs.Empty);
+        }
+        
+
+        private void btnWorkspaces_Click_1(object sender, EventArgs e)
+        {
+            OnWorkspacesButtonClicked?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void btnReservations_Click(object sender, EventArgs e)
+        {
+
+            OnReservationsButtonClicked?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void pnlMain_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void btnEquipment_Click(object sender, EventArgs e)
+        {
+            OnEquipmentButtonClicked?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void btnReports_Click(object sender, EventArgs e)
+        {
+            OnReportsButtonClicked?.Invoke(this, EventArgs.Empty);  
         }
     }
 }

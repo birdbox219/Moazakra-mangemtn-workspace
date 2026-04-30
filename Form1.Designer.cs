@@ -105,6 +105,7 @@
             this.btnWorkspaces.TabIndex = 1;
             this.btnWorkspaces.Text = "Workspaces";
             this.btnWorkspaces.UseVisualStyleBackColor = false;
+            this.btnWorkspaces.Click += new System.EventHandler(this.btnWorkspaces_Click_1);
             // 
             // btnReservations
             // 
@@ -120,6 +121,7 @@
             this.btnReservations.TabIndex = 2;
             this.btnReservations.Text = "Reservations";
             this.btnReservations.UseVisualStyleBackColor = false;
+            this.btnReservations.Click += new System.EventHandler(this.btnReservations_Click);
             // 
             // btnEquipment
             // 
@@ -135,6 +137,7 @@
             this.btnEquipment.TabIndex = 3;
             this.btnEquipment.Text = "Equipment";
             this.btnEquipment.UseVisualStyleBackColor = false;
+            this.btnEquipment.Click += new System.EventHandler(this.btnEquipment_Click);
             // 
             // btnReports
             // 
@@ -150,6 +153,7 @@
             this.btnReports.TabIndex = 4;
             this.btnReports.Text = "Reports";
             this.btnReports.UseVisualStyleBackColor = false;
+            this.btnReports.Click += new System.EventHandler(this.btnReports_Click);
             // 
             // pnlMain
             // 
@@ -159,6 +163,7 @@
             this.pnlMain.Name = "pnlMain";
             this.pnlMain.Size = new System.Drawing.Size(1700, 1080);
             this.pnlMain.TabIndex = 0;
+            this.pnlMain.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlMain_Paint);
             // 
             // Form1
             // 

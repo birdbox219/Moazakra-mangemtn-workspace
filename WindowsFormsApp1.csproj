@@ -46,6 +46,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\MembersController.cs" />
+    <Compile Include="Controllers\WorkSpacesController.cs" />
+    <Compile Include="Data\BaseData.cs" />
+    <Compile Include="Data\MemberData.cs" />
+    <Compile Include="Data\WorkSpaceData.cs" />
     <Compile Include="DB.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
@@ -53,7 +58,32 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormEquipment.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormEquipment.Designer.cs">
+      <DependentUpon>FormEquipment.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormReports.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormReports.Designer.cs">
+      <DependentUpon>FormReports.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormReservations.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormReservations.Designer.cs">
+      <DependentUpon>FormReservations.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormsRouter.cs" />
+    <Compile Include="FormWorkspaces.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormWorkspaces.Designer.cs">
+      <DependentUpon>FormWorkspaces.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Interface\IDataController.cs" />
     <Compile Include="MemberForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -64,6 +94,18 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormEquipment.resx">
+      <DependentUpon>FormEquipment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormReports.resx">
+      <DependentUpon>FormReports.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormReservations.resx">
+      <DependentUpon>FormReservations.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormWorkspaces.resx">
+      <DependentUpon>FormWorkspaces.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MemberForm.resx">
       <DependentUpon>MemberForm.cs</DependentUpon>
