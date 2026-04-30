@@ -1,4 +1,4 @@
-﻿namespace WindowsFormsApp1
+namespace WindowsFormsApp1
 {
     partial class FormReservations
     {
@@ -66,6 +66,8 @@
             // lblTitle
             // 
             this.lblTitle.AutoSize = true;
+            this.lblTitle.BackColor = System.Drawing.Color.Transparent;
+            this.lblTitle.ForeColor = System.Drawing.Color.White;
             this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold);
             this.lblTitle.Location = new System.Drawing.Point(30, 20);
             this.lblTitle.Name = "lblTitle";
@@ -75,7 +77,9 @@
             // 
             // lblMember
             // 
-            this.lblMember.Location = new System.Drawing.Point(30, 80);
+            this.lblMember.BackColor = System.Drawing.Color.Transparent;
+            this.lblMember.ForeColor = System.Drawing.Color.White;
+            this.lblMember.Location = new System.Drawing.Point(30, 78);
             this.lblMember.Name = "lblMember";
             this.lblMember.Size = new System.Drawing.Size(100, 23);
             this.lblMember.TabIndex = 1;
@@ -83,7 +87,9 @@
             // 
             // lblWorkspace
             // 
-            this.lblWorkspace.Location = new System.Drawing.Point(30, 120);
+            this.lblWorkspace.BackColor = System.Drawing.Color.Transparent;
+            this.lblWorkspace.ForeColor = System.Drawing.Color.White;
+            this.lblWorkspace.Location = new System.Drawing.Point(30, 118);
             this.lblWorkspace.Name = "lblWorkspace";
             this.lblWorkspace.Size = new System.Drawing.Size(100, 23);
             this.lblWorkspace.TabIndex = 2;
@@ -91,7 +97,9 @@
             // 
             // lblStart
             // 
-            this.lblStart.Location = new System.Drawing.Point(30, 160);
+            this.lblStart.BackColor = System.Drawing.Color.Transparent;
+            this.lblStart.ForeColor = System.Drawing.Color.White;
+            this.lblStart.Location = new System.Drawing.Point(30, 158);
             this.lblStart.Name = "lblStart";
             this.lblStart.Size = new System.Drawing.Size(100, 23);
             this.lblStart.TabIndex = 3;
@@ -99,7 +107,9 @@
             // 
             // lblEnd
             // 
-            this.lblEnd.Location = new System.Drawing.Point(30, 200);
+            this.lblEnd.BackColor = System.Drawing.Color.Transparent;
+            this.lblEnd.ForeColor = System.Drawing.Color.White;
+            this.lblEnd.Location = new System.Drawing.Point(30, 198);
             this.lblEnd.Name = "lblEnd";
             this.lblEnd.Size = new System.Drawing.Size(100, 23);
             this.lblEnd.TabIndex = 4;
@@ -107,7 +117,9 @@
             // 
             // lblStatus
             // 
-            this.lblStatus.Location = new System.Drawing.Point(30, 240);
+            this.lblStatus.BackColor = System.Drawing.Color.Transparent;
+            this.lblStatus.ForeColor = System.Drawing.Color.White;
+            this.lblStatus.Location = new System.Drawing.Point(30, 238);
             this.lblStatus.Name = "lblStatus";
             this.lblStatus.Size = new System.Drawing.Size(100, 23);
             this.lblStatus.TabIndex = 5;
@@ -115,14 +127,14 @@
             // 
             // cmbMember
             // 
-            this.cmbMember.Location = new System.Drawing.Point(130, 75);
+            this.cmbMember.Location = new System.Drawing.Point(150, 75);
             this.cmbMember.Name = "cmbMember";
             this.cmbMember.Size = new System.Drawing.Size(250, 21);
             this.cmbMember.TabIndex = 6;
             // 
             // cmbWorkspace
             // 
-            this.cmbWorkspace.Location = new System.Drawing.Point(130, 115);
+            this.cmbWorkspace.Location = new System.Drawing.Point(150, 115);
             this.cmbWorkspace.Name = "cmbWorkspace";
             this.cmbWorkspace.Size = new System.Drawing.Size(250, 21);
             this.cmbWorkspace.TabIndex = 7;
@@ -133,28 +145,28 @@
             "Pending",
             "Confirmed",
             "Cancelled"});
-            this.cmbStatus.Location = new System.Drawing.Point(130, 235);
+            this.cmbStatus.Location = new System.Drawing.Point(150, 235);
             this.cmbStatus.Name = "cmbStatus";
             this.cmbStatus.Size = new System.Drawing.Size(250, 21);
             this.cmbStatus.TabIndex = 10;
             // 
             // dtStart
             // 
-            this.dtStart.Location = new System.Drawing.Point(130, 155);
+            this.dtStart.Location = new System.Drawing.Point(150, 155);
             this.dtStart.Name = "dtStart";
             this.dtStart.Size = new System.Drawing.Size(250, 20);
             this.dtStart.TabIndex = 8;
             // 
             // dtEnd
             // 
-            this.dtEnd.Location = new System.Drawing.Point(130, 195);
+            this.dtEnd.Location = new System.Drawing.Point(150, 195);
             this.dtEnd.Name = "dtEnd";
             this.dtEnd.Size = new System.Drawing.Size(250, 20);
             this.dtEnd.TabIndex = 9;
             // 
             // btnAdd
             // 
-            this.btnAdd.Location = new System.Drawing.Point(130, 280);
+            this.btnAdd.Location = new System.Drawing.Point(150, 280);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(100, 35);
             this.btnAdd.TabIndex = 11;
@@ -163,7 +175,7 @@
             // 
             // btnDelete
             // 
-            this.btnDelete.Location = new System.Drawing.Point(250, 280);
+            this.btnDelete.Location = new System.Drawing.Point(270, 280);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(100, 35);
             this.btnDelete.TabIndex = 12;
@@ -177,10 +189,12 @@
             this.dgvReservations.Name = "dgvReservations";
             this.dgvReservations.Size = new System.Drawing.Size(1200, 550);
             this.dgvReservations.TabIndex = 13;
+            this.dgvReservations.BackgroundColor = System.Drawing.Color.FromArgb(25, 25, 25);
+            this.dgvReservations.BorderStyle = System.Windows.Forms.BorderStyle.None;
             // 
             // FormReservations
             // 
-            this.BackColor = System.Drawing.Color.White;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
             this.ClientSize = new System.Drawing.Size(1530, 972);
             this.Controls.Add(this.lblTitle);
             this.Controls.Add(this.lblMember);

@@ -22,6 +22,8 @@ namespace WindowsFormsApp1
 
             _controller = controller;
             _controller.OnDataRefreshed += _controller_OnDataRefreshed;
+
+            this.BackColor = Color.White; // Placeholder for background support
         }
 
         private void _controller_OnDataRefreshed(object sender, EventArgs e)

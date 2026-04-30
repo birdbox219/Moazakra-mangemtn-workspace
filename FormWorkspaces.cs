@@ -23,8 +23,8 @@ namespace WindowsFormsApp1
 
             _controller.OnDataRefreshed += _controller_OnDataRefreshed;
 
-
-
+            // Make form background transparent to show parent panel background
+            this.BackColor = Color.White; // Placeholder for transparency support
         }
 
         private void _controller_OnDataRefreshed(object sender, EventArgs e)

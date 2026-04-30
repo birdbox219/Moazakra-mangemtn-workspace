@@ -1,4 +1,4 @@
-﻿namespace WindowsFormsApp1
+namespace WindowsFormsApp1
 {
     partial class Form1
     {
@@ -33,10 +33,13 @@
         private System.Windows.Forms.Button btnMembers;
         private System.Windows.Forms.Button btnWorkspaces;
         private System.Windows.Forms.Button btnReservations;
-        private System.Windows.Forms.Button btnEquipment;
+       private System.Windows.Forms.Button btnEquipment;
         private System.Windows.Forms.Button btnReports;
+        /// 
+        private System.Windows.Forms.Button btnToggleBackground;
         private void InitializeComponent()
         {
+            this.btnToggleBackground = new System.Windows.Forms.Button();
             this.pnlSidebar = new System.Windows.Forms.Panel();
             this.menu = new System.Windows.Forms.FlowLayoutPanel();
             this.btnMembers = new System.Windows.Forms.Button();
@@ -47,7 +50,24 @@
             this.pnlMain = new System.Windows.Forms.Panel();
             this.pnlSidebar.SuspendLayout();
             this.menu.SuspendLayout();
+            this.pnlMain.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // btnToggleBackground
+            // 
+            this.btnToggleBackground.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnToggleBackground.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(94)))));
+            this.btnToggleBackground.FlatAppearance.BorderSize = 0;
+            this.btnToggleBackground.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnToggleBackground.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.btnToggleBackground.ForeColor = System.Drawing.Color.White;
+            this.btnToggleBackground.Location = new System.Drawing.Point(1550, 10);
+            this.btnToggleBackground.Name = "btnToggleBackground";
+            this.btnToggleBackground.Size = new System.Drawing.Size(140, 30);
+            this.btnToggleBackground.TabIndex = 0;
+            this.btnToggleBackground.Text = "Toggle Background";
+            this.btnToggleBackground.UseVisualStyleBackColor = false;
+            this.btnToggleBackground.Click += new System.EventHandler(this.btnToggleBackground_Click);
             // 
             // pnlSidebar
             // 
@@ -157,7 +177,8 @@
             // 
             // pnlMain
             // 
-            this.pnlMain.BackColor = System.Drawing.Color.White;
+            this.pnlMain.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
+            this.pnlMain.Controls.Add(this.btnToggleBackground);
             this.pnlMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlMain.Location = new System.Drawing.Point(220, 0);
             this.pnlMain.Name = "pnlMain";
@@ -174,6 +195,7 @@
             this.Text = "Workspace Hub";
             this.pnlSidebar.ResumeLayout(false);
             this.menu.ResumeLayout(false);
+            this.pnlMain.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

@@ -1,4 +1,4 @@
-﻿namespace WindowsFormsApp1
+namespace WindowsFormsApp1
 {
     partial class FormEquipment
     {
@@ -57,6 +57,8 @@
             // lblTitle
             // 
             this.lblTitle.AutoSize = true;
+            this.lblTitle.BackColor = System.Drawing.Color.Transparent;
+            this.lblTitle.ForeColor = System.Drawing.Color.White;
             this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold);
             this.lblTitle.Location = new System.Drawing.Point(30, 20);
             this.lblTitle.Name = "lblTitle";
@@ -66,7 +68,9 @@
             // 
             // lblName
             // 
-            this.lblName.Location = new System.Drawing.Point(30, 80);
+            this.lblName.BackColor = System.Drawing.Color.Transparent;
+            this.lblName.ForeColor = System.Drawing.Color.White;
+            this.lblName.Location = new System.Drawing.Point(30, 78);
             this.lblName.Name = "lblName";
             this.lblName.Size = new System.Drawing.Size(100, 23);
             this.lblName.TabIndex = 1;
@@ -74,7 +78,9 @@
             // 
             // lblType
             // 
-            this.lblType.Location = new System.Drawing.Point(30, 120);
+            this.lblType.BackColor = System.Drawing.Color.Transparent;
+            this.lblType.ForeColor = System.Drawing.Color.White;
+            this.lblType.Location = new System.Drawing.Point(30, 118);
             this.lblType.Name = "lblType";
             this.lblType.Size = new System.Drawing.Size(100, 23);
             this.lblType.TabIndex = 2;
@@ -82,21 +88,21 @@
             // 
             // txtName
             // 
-            this.txtName.Location = new System.Drawing.Point(120, 75);
+            this.txtName.Location = new System.Drawing.Point(140, 75);
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(250, 20);
             this.txtName.TabIndex = 3;
             // 
             // txtType
             // 
-            this.txtType.Location = new System.Drawing.Point(120, 115);
+            this.txtType.Location = new System.Drawing.Point(140, 115);
             this.txtType.Name = "txtType";
             this.txtType.Size = new System.Drawing.Size(250, 20);
             this.txtType.TabIndex = 4;
             // 
             // btnAdd
             // 
-            this.btnAdd.Location = new System.Drawing.Point(120, 160);
+            this.btnAdd.Location = new System.Drawing.Point(140, 160);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(100, 35);
             this.btnAdd.TabIndex = 5;
@@ -105,7 +111,7 @@
             // 
             // btnDelete
             // 
-            this.btnDelete.Location = new System.Drawing.Point(240, 160);
+            this.btnDelete.Location = new System.Drawing.Point(260, 160);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(100, 35);
             this.btnDelete.TabIndex = 6;
@@ -119,10 +125,12 @@
             this.dgvEquipment.Name = "dgvEquipment";
             this.dgvEquipment.Size = new System.Drawing.Size(1200, 650);
             this.dgvEquipment.TabIndex = 7;
+            this.dgvEquipment.BackgroundColor = System.Drawing.Color.FromArgb(25, 25, 25);
+            this.dgvEquipment.BorderStyle = System.Windows.Forms.BorderStyle.None;
             // 
             // FormEquipment
             // 
-            this.BackColor = System.Drawing.Color.White;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
             this.ClientSize = new System.Drawing.Size(1515, 974);
             this.Controls.Add(this.lblTitle);
             this.Controls.Add(this.lblName);

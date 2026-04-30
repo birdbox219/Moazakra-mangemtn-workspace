@@ -1,4 +1,4 @@
-﻿namespace WindowsFormsApp1
+namespace WindowsFormsApp1
 {
     partial class FormWorkspaces
     {
@@ -60,19 +60,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvWorkspaces)).BeginInit();
             this.SuspendLayout();
             // 
-            // lblTitle
-            // 
-            this.lblTitle.AutoSize = true;
-            this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold);
-            this.lblTitle.Location = new System.Drawing.Point(30, 20);
-            this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(271, 30);
-            this.lblTitle.TabIndex = 0;
-            this.lblTitle.Text = "Workspace Management";
-            // 
             // lblType
             // 
-            this.lblType.Location = new System.Drawing.Point(30, 80);
+            this.lblType.BackColor = System.Drawing.Color.Transparent;
+            this.lblType.ForeColor = System.Drawing.Color.White;
+            this.lblType.Location = new System.Drawing.Point(30, 78);
             this.lblType.Name = "lblType";
             this.lblType.Size = new System.Drawing.Size(100, 23);
             this.lblType.TabIndex = 1;
@@ -80,7 +72,9 @@
             // 
             // lblPrice
             // 
-            this.lblPrice.Location = new System.Drawing.Point(30, 120);
+            this.lblPrice.BackColor = System.Drawing.Color.Transparent;
+            this.lblPrice.ForeColor = System.Drawing.Color.White;
+            this.lblPrice.Location = new System.Drawing.Point(30, 118);
             this.lblPrice.Name = "lblPrice";
             this.lblPrice.Size = new System.Drawing.Size(100, 23);
             this.lblPrice.TabIndex = 2;
@@ -88,7 +82,9 @@
             // 
             // lblCapacity
             // 
-            this.lblCapacity.Location = new System.Drawing.Point(30, 160);
+            this.lblCapacity.BackColor = System.Drawing.Color.Transparent;
+            this.lblCapacity.ForeColor = System.Drawing.Color.White;
+            this.lblCapacity.Location = new System.Drawing.Point(30, 158);
             this.lblCapacity.Name = "lblCapacity";
             this.lblCapacity.Size = new System.Drawing.Size(100, 23);
             this.lblCapacity.TabIndex = 3;
@@ -96,15 +92,29 @@
             // 
             // lblHub
             // 
-            this.lblHub.Location = new System.Drawing.Point(30, 200);
+            this.lblHub.BackColor = System.Drawing.Color.Transparent;
+            this.lblHub.ForeColor = System.Drawing.Color.White;
+            this.lblHub.Location = new System.Drawing.Point(30, 198);
             this.lblHub.Name = "lblHub";
             this.lblHub.Size = new System.Drawing.Size(100, 23);
             this.lblHub.TabIndex = 4;
             this.lblHub.Text = "Hub:";
             // 
+            // lblTitle
+            // 
+            this.lblTitle.AutoSize = true;
+            this.lblTitle.BackColor = System.Drawing.Color.Transparent;
+            this.lblTitle.ForeColor = System.Drawing.Color.White;
+            this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold);
+            this.lblTitle.Location = new System.Drawing.Point(30, 20);
+            this.lblTitle.Name = "lblTitle";
+            this.lblTitle.Size = new System.Drawing.Size(271, 30);
+            this.lblTitle.TabIndex = 0;
+            this.lblTitle.Text = "Workspace Management";
+            // 
             // txtType
             // 
-            this.txtType.Location = new System.Drawing.Point(120, 75);
+            this.txtType.Location = new System.Drawing.Point(140, 75);
             this.txtType.Name = "txtType";
             this.txtType.Size = new System.Drawing.Size(250, 20);
             this.txtType.TabIndex = 5;
@@ -112,7 +122,7 @@
             // 
             // txtPrice
             // 
-            this.txtPrice.Location = new System.Drawing.Point(120, 115);
+            this.txtPrice.Location = new System.Drawing.Point(140, 115);
             this.txtPrice.Name = "txtPrice";
             this.txtPrice.Size = new System.Drawing.Size(250, 20);
             this.txtPrice.TabIndex = 6;
@@ -120,7 +130,7 @@
             // 
             // txtCapacity
             // 
-            this.txtCapacity.Location = new System.Drawing.Point(120, 155);
+            this.txtCapacity.Location = new System.Drawing.Point(140, 155);
             this.txtCapacity.Name = "txtCapacity";
             this.txtCapacity.Size = new System.Drawing.Size(250, 20);
             this.txtCapacity.TabIndex = 7;
@@ -129,7 +139,7 @@
             // cmbHub
             // 
             this.cmbHub.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbHub.Location = new System.Drawing.Point(120, 195);
+            this.cmbHub.Location = new System.Drawing.Point(140, 195);
             this.cmbHub.Name = "cmbHub";
             this.cmbHub.Size = new System.Drawing.Size(250, 21);
             this.cmbHub.TabIndex = 8;
@@ -137,7 +147,7 @@
             // 
             // btnAdd
             // 
-            this.btnAdd.Location = new System.Drawing.Point(120, 240);
+            this.btnAdd.Location = new System.Drawing.Point(140, 240);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(100, 35);
             this.btnAdd.TabIndex = 9;
@@ -160,10 +170,12 @@
             this.dgvWorkspaces.Name = "dgvWorkspaces";
             this.dgvWorkspaces.Size = new System.Drawing.Size(1200, 600);
             this.dgvWorkspaces.TabIndex = 11;
+            this.dgvWorkspaces.BackgroundColor = System.Drawing.Color.FromArgb(25, 25, 25);
+            this.dgvWorkspaces.BorderStyle = System.Windows.Forms.BorderStyle.None;
             // 
             // FormWorkspaces
             // 
-            this.BackColor = System.Drawing.Color.White;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
             this.ClientSize = new System.Drawing.Size(1355, 950);
             this.Controls.Add(this.lblTitle);
             this.Controls.Add(this.lblType);

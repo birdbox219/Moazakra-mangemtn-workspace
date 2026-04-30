@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,69 +13,129 @@ namespace WindowsFormsApp1
     public partial class Form1 : Form
     {
         public static Form1 Instance { get; private set; }
-
-
-
         private FormsRouter _formRouter;
 
+        // Navigation Events
         public event EventHandler OnMemberButtonClikced;
         public event EventHandler OnWorkspacesButtonClicked;
         public event EventHandler OnReservationsButtonClicked;
         public event EventHandler OnEquipmentButtonClicked;
         public event EventHandler OnReportsButtonClicked;
+
+        private bool _backgroundEnabled = true;
+        private Image _cachedBgImage = null;
+
         public Form1()
         {
             InitializeComponent();
             Instance = this;
+            
+            // Enable double-buffering to prevent flicker
+            var prop = typeof(Control).GetProperty("DoubleBuffered", 
+                System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+            prop?.SetValue(pnlMain, true, null);
 
+            LoadBgAsset();
+
+            // pnlMain stays plain — background image only goes on child forms
+            pnlMain.BackColor = Color.FromArgb(30, 30, 30);
 
             _formRouter = new FormsRouter(this);
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void LoadBgAsset()
         {
+            try
+            {
+                string[] possiblePaths = {
+                    System.IO.Path.Combine(Application.StartupPath, "Assets", "ameen.png"),
+                    System.IO.Path.Combine(Application.StartupPath, "..", "..", "Assets", "ameen.png"),
+                    System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Assets", "ameen.png")
+                };
 
+                foreach (var path in possiblePaths)
+                {
+                    if (System.IO.File.Exists(path))
+                    {
+                        _cachedBgImage = Image.FromFile(path);
+                        break;
+                    }
+                }
+            }
+            catch { }
         }
+
         public void LoadForm(Form f)
         {
+            // Remove toggle button from its current parent before clearing
+            if (btnToggleBackground.Parent != null)
+            {
+                btnToggleBackground.Parent.Controls.Remove(btnToggleBackground);
+            }
+
             pnlMain.Controls.Clear();
+            
             f.TopLevel = false;
             f.FormBorderStyle = FormBorderStyle.None;
             f.Dock = DockStyle.Fill;
+
+            // Enable double buffering on child form
+            var dbProp = typeof(Control).GetProperty("DoubleBuffered",
+                System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+            dbProp?.SetValue(f, true, null);
+
+            // Apply background image to the child form (NOT pnlMain — avoids double-rendering)
+            ApplyBackgroundToForm(f);
+
             pnlMain.Controls.Add(f);
+            pnlMain.PerformLayout(); // Force layout so Dock=Fill resizes the form
+            
+            // Add the toggle button to the child form so it renders on top
+            f.Controls.Add(btnToggleBackground);
+            // Position at top-RIGHT (Anchor = Top|Right keeps it there on resize)
+            btnToggleBackground.Location = new Point(f.ClientSize.Width - btnToggleBackground.Width - 10, 10);
+            btnToggleBackground.BringToFront();
+            
             f.Show();
         }
 
-        private void btnMembers_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Applies or removes the background image on a child form.
+        /// </summary>
+        private void ApplyBackgroundToForm(Form f)
         {
-            OnMemberButtonClikced?.Invoke(this, EventArgs.Empty);
-        }
-        
-
-        private void btnWorkspaces_Click_1(object sender, EventArgs e)
-        {
-            OnWorkspacesButtonClicked?.Invoke(this, EventArgs.Empty);
-        }
-
-        private void btnReservations_Click(object sender, EventArgs e)
-        {
-
-            OnReservationsButtonClicked?.Invoke(this, EventArgs.Empty);
-        }
-
-        private void pnlMain_Paint(object sender, PaintEventArgs e)
-        {
-
+            if (_backgroundEnabled && _cachedBgImage != null)
+            {
+                f.BackgroundImage = _cachedBgImage;
+                f.BackgroundImageLayout = ImageLayout.Stretch;
+            }
+            else
+            {
+                f.BackgroundImage = null;
+            }
+            f.BackColor = Color.FromArgb(30, 30, 30);
         }
 
-        private void btnEquipment_Click(object sender, EventArgs e)
+        private void btnToggleBackground_Click(object sender, EventArgs e)
         {
-            OnEquipmentButtonClicked?.Invoke(this, EventArgs.Empty);
+            _backgroundEnabled = !_backgroundEnabled;
+
+            // Update only the child form(s) inside pnlMain
+            foreach (Control c in pnlMain.Controls)
+            {
+                if (c is Form f)
+                {
+                    ApplyBackgroundToForm(f);
+                }
+            }
         }
 
-        private void btnReports_Click(object sender, EventArgs e)
-        {
-            OnReportsButtonClicked?.Invoke(this, EventArgs.Empty);  
-        }
+        private void btnMembers_Click(object sender, EventArgs e) => OnMemberButtonClikced?.Invoke(this, EventArgs.Empty);
+        private void btnWorkspaces_Click_1(object sender, EventArgs e) => OnWorkspacesButtonClicked?.Invoke(this, EventArgs.Empty);
+        private void btnReservations_Click(object sender, EventArgs e) => OnReservationsButtonClicked?.Invoke(this, EventArgs.Empty);
+        private void btnEquipment_Click(object sender, EventArgs e) => OnEquipmentButtonClicked?.Invoke(this, EventArgs.Empty);
+        private void btnReports_Click(object sender, EventArgs e) => OnReportsButtonClicked?.Invoke(this, EventArgs.Empty);
+        private void pnlMain_Paint(object sender, PaintEventArgs e) { }
+        private void Form1_Load(object sender, EventArgs e) { }
     }
 }

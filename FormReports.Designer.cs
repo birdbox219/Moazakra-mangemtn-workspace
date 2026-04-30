@@ -1,4 +1,4 @@
-﻿namespace WindowsFormsApp1
+namespace WindowsFormsApp1
 {
     partial class FormReports
     {
@@ -88,10 +88,12 @@
             this.dgvReports.Name = "dgvReports";
             this.dgvReports.Size = new System.Drawing.Size(1200, 700);
             this.dgvReports.TabIndex = 4;
+            this.dgvReports.BackgroundColor = System.Drawing.Color.FromArgb(25, 25, 25);
+            this.dgvReports.BorderStyle = System.Windows.Forms.BorderStyle.None;
             // 
             // FormReports
             // 
-            this.BackColor = System.Drawing.Color.White;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
             this.ClientSize = new System.Drawing.Size(1533, 967);
             this.Controls.Add(this.lblTitle);
             this.Controls.Add(this.btnPopularWorkspace);
