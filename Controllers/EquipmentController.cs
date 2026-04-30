@@ -9,46 +9,37 @@ using WindowsFormsApp1.Interface;
 
 namespace WindowsFormsApp1.Controllers
 {
-    internal class MembersController : IDataController
+    internal class EquipmentController : IDataController
     {
         private DB _db = new DB();
 
         public DataTable Data { get; private set; }
-        public MembersController()
-        {
-            // Constructor logic if needed
-        }
 
         public event EventHandler OnDataRefreshed;
 
-
+        
         public void RefreshData()
         {
-            Data= _db.GetMembers();
-
-
+            Data = _db.GetEquipment();
             OnDataRefreshed?.Invoke(this, EventArgs.Empty);
         }
 
+        
         public void Add(BaseData data)
         {
-            if(data is MemberData member )
+            if (data is EquipmentData eq)
             {
-                _db.AddMember(member.Name, member.Email, member.Company);
+                _db.AddEquipment(eq.Name, eq.EquipmentType);
             }
 
             RefreshData();
         }
 
+        
         public void Delte(int id)
         {
-
-            
-            _db.DeleteMember(id);
+            _db.DeleteEquipment(id);
             RefreshData();
-
         }
-
-
     }
 }

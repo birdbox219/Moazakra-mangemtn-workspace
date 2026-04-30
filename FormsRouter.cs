@@ -16,6 +16,8 @@ namespace WindowsFormsApp1
 
         private readonly MembersController _membersController = new MembersController();
         private readonly WorkSpacesController _workspacesController = new WorkSpacesController();
+        private readonly ReservationController _reservationsController = new ReservationController();
+        private readonly EquipmentController _equipmentController = new EquipmentController();
         public FormsRouter(Form1 form)
         {
            mainForm = form;
@@ -85,9 +87,9 @@ namespace WindowsFormsApp1
                 case FormNames.Workspaces:
                     return new FormWorkspaces(_workspacesController);
                 case FormNames.Reservations:
-                    return new FormReservations();
+                    return new FormReservations(_reservationsController);
                 case FormNames.Equipment:
-                    return new FormEquipment();
+                    return new FormEquipment(_equipmentController);
                 case FormNames.Reports:
                     return new FormReports();
                 default:

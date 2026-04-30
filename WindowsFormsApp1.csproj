@@ -46,10 +46,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\EquipmentController.cs" />
     <Compile Include="Controllers\MembersController.cs" />
+    <Compile Include="Controllers\ReservationController .cs" />
     <Compile Include="Controllers\WorkSpacesController.cs" />
     <Compile Include="Data\BaseData.cs" />
+    <Compile Include="Data\EquipmentData.cs" />
     <Compile Include="Data\MemberData.cs" />
+    <Compile Include="Data\ReservationData .cs" />
     <Compile Include="Data\WorkSpaceData.cs" />
     <Compile Include="DB.cs" />
     <Compile Include="Form1.cs">

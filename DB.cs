@@ -153,6 +153,113 @@ namespace WindowsFormsApp1
 
 
 
+        public DataTable GetReservations()
+        {
+            SqlDataAdapter da = new SqlDataAdapter(@"
+        SELECT R.ReservationID, M.Name AS Member, W.Type AS Workspace,
+               R.StartDate, R.EndDate, R.Status
+        FROM Reservation R
+        JOIN Member M ON R.MemberID = M.MemberID
+        JOIN Workspace W ON R.WorkspaceID = W.WorkspaceID", con);
+
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            return dt;
+        }
+
+
+
+        public void AddReservation(int memberID, int workspaceID, DateTime start, DateTime end, string status)
+        {
+            try
+            {
+                SqlCommand cmd = new SqlCommand(@"
+            INSERT INTO Reservation (MemberID, WorkspaceID, StartDate, EndDate, Status)
+            VALUES (@m, @w, @s, @e, @st)", con);
+
+                cmd.Parameters.AddWithValue("@m", memberID);
+                cmd.Parameters.AddWithValue("@w", workspaceID);
+                cmd.Parameters.AddWithValue("@s", start);
+                cmd.Parameters.AddWithValue("@e", end);
+                cmd.Parameters.AddWithValue("@st", status);
+
+                con.Open();
+                cmd.ExecuteNonQuery();
+                con.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error adding reservation: " + ex.Message);
+            }
+        }
+
+
+        public void DeleteReservation(int id)
+        {
+            SqlCommand cmd = new SqlCommand(
+                "DELETE FROM Reservation WHERE ReservationID = @id", con);
+
+            cmd.Parameters.AddWithValue("@id", id);
+
+            con.Open();
+            cmd.ExecuteNonQuery();
+            con.Close();
+        }
+
+        public DataTable GetEquipment()
+        {
+            SqlDataAdapter da = new SqlDataAdapter("SELECT * FROM Equipment", con);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            return dt;
+        }
+
+
+        public void AddEquipment(string name, string type)
+        {
+            try
+            {
+                SqlCommand cmd = new SqlCommand(
+                    "INSERT INTO Equipment (Name, Type) VALUES (@n, @t)", con);
+
+                cmd.Parameters.AddWithValue("@n", name);
+                cmd.Parameters.AddWithValue("@t", type);
+
+                con.Open();
+                cmd.ExecuteNonQuery();
+                con.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error adding equipment: " + ex.Message);
+            }
+        }
+
+
+        public void DeleteEquipment(int id)
+        {
+            try
+            {
+                SqlCommand cmd = new SqlCommand(
+                    "DELETE FROM Equipment WHERE EquipmentID = @id", con);
+
+                cmd.Parameters.AddWithValue("@id", id);
+
+                con.Open();
+                cmd.ExecuteNonQuery();
+                con.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error deleting equipment: " + ex.Message);
+            }
+        }
+
+
+
+
+
+
 
 
 
