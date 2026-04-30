@@ -37,8 +37,13 @@ namespace WindowsFormsApp1
 
             LoadBgAsset();
 
-            // pnlMain stays plain — background image only goes on child forms
+            // Show background on pnlMain for the initial load screen
             pnlMain.BackColor = Color.FromArgb(30, 30, 30);
+            if (_cachedBgImage != null)
+            {
+                pnlMain.BackgroundImage = _cachedBgImage;
+                pnlMain.BackgroundImageLayout = ImageLayout.Stretch;
+            }
 
             _formRouter = new FormsRouter(this);
         }
@@ -73,6 +78,9 @@ namespace WindowsFormsApp1
                 btnToggleBackground.Parent.Controls.Remove(btnToggleBackground);
             }
 
+
+            // Clear pnlMain's background so it doesn't double-render with the child form's
+            pnlMain.BackgroundImage = null;
             pnlMain.Controls.Clear();
             
             f.TopLevel = false;
