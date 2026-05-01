@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -37,9 +37,9 @@ namespace WindowsFormsApp1
 
             LoadBgAsset();
 
-            // Show background on pnlMain for the initial load screen
+             //Show background on pnlMain for the initial load screen
             pnlMain.BackColor = Color.FromArgb(30, 30, 30);
-            if (_cachedBgImage != null)
+            if (_cachedBgImage != null && _backgroundEnabled)
             {
                 pnlMain.BackgroundImage = _cachedBgImage;
                 pnlMain.BackgroundImageLayout = ImageLayout.Stretch;
@@ -72,14 +72,14 @@ namespace WindowsFormsApp1
 
         public void LoadForm(Form f)
         {
-            // Remove toggle button from its current parent before clearing
+            //Remove toggle button from its current parent before clearing
             if (btnToggleBackground.Parent != null)
             {
                 btnToggleBackground.Parent.Controls.Remove(btnToggleBackground);
             }
 
+            pnlMain.BackgroundImage = (_backgroundEnabled && _cachedBgImage != null) ? _cachedBgImage : null;
 
-            // Clear pnlMain's background so it doesn't double-render with the child form's
             pnlMain.BackgroundImage = null;
             pnlMain.Controls.Clear();
             
@@ -87,20 +87,20 @@ namespace WindowsFormsApp1
             f.FormBorderStyle = FormBorderStyle.None;
             f.Dock = DockStyle.Fill;
 
-            // Enable double buffering on child form
+            
             var dbProp = typeof(Control).GetProperty("DoubleBuffered",
                 System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
             dbProp?.SetValue(f, true, null);
 
-            // Apply background image to the child form (NOT pnlMain — avoids double-rendering)
+            
             ApplyBackgroundToForm(f);
 
             pnlMain.Controls.Add(f);
-            pnlMain.PerformLayout(); // Force layout so Dock=Fill resizes the form
+            pnlMain.PerformLayout(); 
             
-            // Add the toggle button to the child form so it renders on top
+            
             f.Controls.Add(btnToggleBackground);
-            // Position at top-RIGHT (Anchor = Top|Right keeps it there on resize)
+            
             btnToggleBackground.Location = new Point(f.ClientSize.Width - btnToggleBackground.Width - 10, 10);
             btnToggleBackground.BringToFront();
             
@@ -128,7 +128,17 @@ namespace WindowsFormsApp1
         {
             _backgroundEnabled = !_backgroundEnabled;
 
-            // Update only the child form(s) inside pnlMain
+
+            if (_backgroundEnabled && _cachedBgImage != null)
+            {
+                pnlMain.BackgroundImage = _cachedBgImage;
+                pnlMain.BackgroundImageLayout = ImageLayout.Stretch;
+            }
+            else
+            {
+                pnlMain.BackgroundImage = null;
+            }
+
             foreach (Control c in pnlMain.Controls)
             {
                 if (c is Form f)
