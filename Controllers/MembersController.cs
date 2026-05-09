@@ -1,54 +1,39 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WindowsFormsApp1.Data;
-using WindowsFormsApp1.Interface;
+using Microsoft.AspNetCore.Mvc;
+using WebApplication1.Data;
+using WebApplication1.Models;
 
-namespace WindowsFormsApp1.Controllers
+namespace WebApplication1.Controllers
 {
-    internal class MembersController : IDataController
+    [ApiController]
+    [Route("api/[controller]")]
+    public class MembersController : ControllerBase
     {
-        private DB _db = new DB();
+        private readonly DatabaseService _db;
 
-        public DataTable Data { get; private set; }
-        public MembersController()
+        public MembersController(DatabaseService db)
         {
-            // Constructor logic if needed
+            _db = db;
         }
 
-        public event EventHandler OnDataRefreshed;
-
-
-        public void RefreshData()
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Member>>> GetMembers()
         {
-            Data= _db.GetMembers();
-
-
-            OnDataRefreshed?.Invoke(this, EventArgs.Empty);
+            var members = await _db.GetMembersAsync();
+            return Ok(members);
         }
 
-        public void Add(BaseData data)
+        [HttpPost]
+        public async Task<IActionResult> AddMember([FromBody] Member member)
         {
-            if(data is MemberData member )
-            {
-                _db.AddMember(member.Name, member.Email, member.Company);
-            }
-
-            RefreshData();
+            await _db.AddMemberAsync(member);
+            return Ok();
         }
 
-        public void Delte(int id)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteMember(int id)
         {
-
-            
-            _db.DeleteMember(id);
-            RefreshData();
-
+            await _db.DeleteMemberAsync(id);
+            return Ok();
         }
-
-
     }
 }

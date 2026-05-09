@@ -1,45 +1,39 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WindowsFormsApp1.Data;
-using WindowsFormsApp1.Interface;
+using Microsoft.AspNetCore.Mvc;
+using WebApplication1.Data;
+using WebApplication1.Models;
 
-namespace WindowsFormsApp1.Controllers
+namespace WebApplication1.Controllers
 {
-    internal class EquipmentController : IDataController
+    [ApiController]
+    [Route("api/[controller]")]
+    public class EquipmentController : ControllerBase
     {
-        private DB _db = new DB();
+        private readonly DatabaseService _db;
 
-        public DataTable Data { get; private set; }
-
-        public event EventHandler OnDataRefreshed;
-
-        
-        public void RefreshData()
+        public EquipmentController(DatabaseService db)
         {
-            Data = _db.GetEquipment();
-            OnDataRefreshed?.Invoke(this, EventArgs.Empty);
+            _db = db;
         }
 
-        
-        public void Add(BaseData data)
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Equipment>>> GetEquipment()
         {
-            if (data is EquipmentData eq)
-            {
-                _db.AddEquipment(eq.Name, eq.EquipmentType);
-            }
-
-            RefreshData();
+            var equipment = await _db.GetEquipmentAsync();
+            return Ok(equipment);
         }
 
-        
-        public void Delte(int id)
+        [HttpPost]
+        public async Task<IActionResult> AddEquipment([FromBody] Equipment eq)
         {
-            _db.DeleteEquipment(id);
-            RefreshData();
+            await _db.AddEquipmentAsync(eq);
+            return Ok();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteEquipment(int id)
+        {
+            await _db.DeleteEquipmentAsync(id);
+            return Ok();
         }
     }
 }

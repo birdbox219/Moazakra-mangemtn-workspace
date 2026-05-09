@@ -1,0 +1,78 @@
+const API_BASE_URL = 'http://localhost:5031/api';
+
+export interface Member {
+  memberID?: number;
+  name: string;
+  email: string;
+  company: string;
+}
+
+export interface Workspace {
+  workspaceID?: number;
+  type: string;
+  price: number;
+  capacity: number;
+  hubID: number;
+}
+
+export interface Reservation {
+  reservationID?: number;
+  memberID: number;
+  workspaceID: number;
+  startDate: string;
+  endDate: string;
+  status: string;
+  memberName?: string;
+  workspaceType?: string;
+}
+
+export interface Equipment {
+  equipmentID?: number;
+  name: string;
+  type: string;
+}
+
+export interface Hub {
+  hubID: number;
+  name: string;
+}
+
+export const api = {
+  members: {
+    getAll: () => fetch(`${API_BASE_URL}/members`).then(res => res.json()),
+    add: (data: Member) => fetch(`${API_BASE_URL}/members`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    }),
+    delete: (id: number) => fetch(`${API_BASE_URL}/members/${id}`, { method: 'DELETE' })
+  },
+  workspaces: {
+    getAll: () => fetch(`${API_BASE_URL}/workspaces`).then(res => res.json()),
+    getHubs: () => fetch(`${API_BASE_URL}/workspaces/hubs`).then(res => res.json()),
+    add: (data: Workspace) => fetch(`${API_BASE_URL}/workspaces`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    }),
+    delete: (id: number) => fetch(`${API_BASE_URL}/workspaces/${id}`, { method: 'DELETE' })
+  },
+  reservations: {
+    getAll: () => fetch(`${API_BASE_URL}/reservations`).then(res => res.json()),
+    add: (data: Reservation) => fetch(`${API_BASE_URL}/reservations`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    }),
+    delete: (id: number) => fetch(`${API_BASE_URL}/reservations/${id}`, { method: 'DELETE' })
+  },
+  equipment: {
+    getAll: () => fetch(`${API_BASE_URL}/equipment`).then(res => res.json()),
+    add: (data: Equipment) => fetch(`${API_BASE_URL}/equipment`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    }),
+    delete: (id: number) => fetch(`${API_BASE_URL}/equipment/${id}`, { method: 'DELETE' })
+  }
+};
