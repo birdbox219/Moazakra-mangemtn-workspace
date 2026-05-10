@@ -74,5 +74,38 @@ export const api = {
       body: JSON.stringify(data)
     }),
     delete: (id: number) => fetch(`${API_BASE_URL}/equipment/${id}`, { method: 'DELETE' })
+  },
+ report: {
+  getDashboard: (
+    startDate?: string,
+    endDate?: string
+  ) => {
+    let url =
+      `${API_BASE_URL}/report/dashboard`;
+
+    const params =
+      new URLSearchParams();
+
+    if (startDate) {
+      params.append(
+        "startDate",
+        startDate
+      );
+    }
+
+    if (endDate) {
+      params.append(
+        "endDate",
+        endDate
+      );
+    }
+
+    if (params.toString()) {
+      url += `?${params.toString()}`;
+    }
+
+    return fetch(url)
+      .then(res => res.json());
   }
+} 
 };
