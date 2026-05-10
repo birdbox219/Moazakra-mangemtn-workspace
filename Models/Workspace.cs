@@ -7,5 +7,8 @@ namespace WebApplication1.Models
         public decimal Price { get; set; }
         public int Capacity { get; set; }
         public int HubID { get; set; }
+
+        // Navigation
+        public string? HubName { get; set; }
     }
 }

@@ -29,6 +29,14 @@ namespace WebApplication1.Controllers
             return Ok();
         }
 
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateWorkspace(int id, [FromBody] Workspace ws)
+        {
+            ws.WorkspaceID = id;
+            await _db.UpdateWorkspaceAsync(ws);
+            return Ok();
+        }
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteWorkspace(int id)
         {
@@ -36,11 +44,34 @@ namespace WebApplication1.Controllers
             return Ok();
         }
         
+        // Hubs
         [HttpGet("hubs")]
         public async Task<ActionResult<IEnumerable<Hub>>> GetHubs()
         {
-            var hubs = await _db.GetHubsAsync();
+            var  hubs = await _db.GetHubsAsync();
             return Ok(hubs);
+        }
+
+        [HttpPost("hubs")]
+        public async Task<IActionResult> AddHub([FromBody] Hub hub)
+        {
+            await _db.AddHubAsync(hub);
+            return Ok();
+        }
+
+        [HttpPut("hubs/{id}")]
+        public async Task<IActionResult> UpdateHub(int id, [FromBody] Hub hub)
+        {
+            hub.HubID = id;
+            await _db.UpdateHubAsync(hub);
+            return Ok();
+        }
+
+        [HttpDelete("hubs/{id}")]
+        public async Task<IActionResult> DeleteHub(int id)
+        {
+            await _db.DeleteHubAsync(id);
+            return Ok();
         }
     }
 }
