@@ -89,24 +89,24 @@ export default function ReportDashboard() {
   }
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-4 md:space-y-8">
 
-      <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-bold">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+        <h1 className="text-2xl md:text-3xl font-bold">
           Analytics Dashboard
         </h1>
 
         <button
           onClick={loadReport}
-          className="bg-indigo-600 text-white px-4 py-2 rounded"
+          className="bg-indigo-600 text-white px-4 py-2 rounded w-full sm:w-auto"
         >
           Refresh
         </button>
       </div>
 
       
-      <div className="bg-white shadow rounded-xl p-4 flex gap-4 items-end">
-        <div>
+      <div className="bg-white shadow rounded-xl p-4 flex flex-col sm:flex-row gap-4 items-stretch sm:items-end">
+        <div className="flex-1">
           <label className="block mb-1 text-sm">
             Start Date
           </label>
@@ -119,11 +119,11 @@ export default function ReportDashboard() {
                 e.target.value
               )
             }
-            className="border rounded px-3 py-2"
+            className="border rounded px-3 py-2 w-full"
           />
         </div>
 
-        <div>
+        <div className="flex-1">
           <label className="block mb-1 text-sm">
             End Date
           </label>
@@ -136,76 +136,78 @@ export default function ReportDashboard() {
                 e.target.value
               )
             }
-            className="border rounded px-3 py-2"
+            className="border rounded px-3 py-2 w-full"
           />
         </div>
 
         <button
           onClick={loadReport}
-          className="bg-green-600 text-white px-4 py-2 rounded"
+          className="bg-green-600 text-white px-4 py-2 rounded w-full sm:w-auto"
         >
           Apply Filter
         </button>
       </div>
 
       
-      <div className="grid grid-cols-3 gap-4">
-        <div className="bg-white shadow rounded-xl p-6">
-          <p>Total Members</p>
-          <h2 className="text-3xl font-bold">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div className="bg-white shadow rounded-xl p-4 md:p-6">
+          <p className="text-sm text-gray-500">Total Members</p>
+          <h2 className="text-2xl md:text-3xl font-bold">
             {report.totalMembers}
           </h2>
         </div>
 
-        <div className="bg-white shadow rounded-xl p-6">
-          <p>Total Reservations</p>
-          <h2 className="text-3xl font-bold">
+        <div className="bg-white shadow rounded-xl p-4 md:p-6">
+          <p className="text-sm text-gray-500">Total Reservations</p>
+          <h2 className="text-2xl md:text-3xl font-bold">
             {report.totalReservations}
           </h2>
         </div>
 
-        <div className="bg-white shadow rounded-xl p-6">
-          <p>Total Workspaces</p>
-          <h2 className="text-3xl font-bold">
+        <div className="bg-white shadow rounded-xl p-4 md:p-6">
+          <p className="text-sm text-gray-500">Total Workspaces</p>
+          <h2 className="text-2xl md:text-3xl font-bold">
             {report.totalWorkspaces}
           </h2>
         </div>
       </div>
 
       
-      <div className="bg-white shadow rounded-xl p-6">
-        <h2 className="text-xl font-bold mb-4">
+      <div className="bg-white shadow rounded-xl p-4 md:p-6">
+        <h2 className="text-lg md:text-xl font-bold mb-4">
           Statistics
         </h2>
 
-        <p>
-          Average:
-          {" "}
-          {report.averageReservationDuration.toFixed(2)}
-        </p>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4">
+          <p>
+            Average:
+            {" "}
+            {report.averageReservationDuration.toFixed(2)}
+          </p>
 
-        <p>
-          Median:
-          {" "}
-          {report.medianReservationDuration.toFixed(2)}
-        </p>
+          <p>
+            Median:
+            {" "}
+            {report.medianReservationDuration.toFixed(2)}
+          </p>
 
-        <p>
-          Std Dev:
-          {" "}
-          {report.standardDeviationDuration.toFixed(2)}
-        </p>
+          <p>
+            Std Dev:
+            {" "}
+            {report.standardDeviationDuration.toFixed(2)}
+          </p>
+        </div>
       </div>
 
       
-      <div className="bg-white shadow rounded-xl p-6">
-        <h2 className="text-xl font-bold mb-4">
+      <div className="bg-white shadow rounded-xl p-4 md:p-6">
+        <h2 className="text-lg md:text-xl font-bold mb-4">
           Reservations Per Month
         </h2>
 
         <ResponsiveContainer
           width="100%"
-          height={300}
+          height={250}
         >
           <LineChart
             data={report.reservationsPerMonth}
@@ -224,14 +226,14 @@ export default function ReportDashboard() {
       </div>
 
       
-      <div className="bg-white shadow rounded-xl p-6">
-        <h2 className="text-xl font-bold mb-4">
+      <div className="bg-white shadow rounded-xl p-4 md:p-6">
+        <h2 className="text-lg md:text-xl font-bold mb-4">
           Workspace Usage
         </h2>
 
         <ResponsiveContainer
           width="100%"
-          height={300}
+          height={250}
         >
           <BarChart
             data={report.workspaceUsage}
@@ -249,21 +251,21 @@ export default function ReportDashboard() {
       </div>
 
       
-      <div className="bg-white shadow rounded-xl p-6">
-        <h2 className="text-xl font-bold mb-4">
+      <div className="bg-white shadow rounded-xl p-4 md:p-6">
+        <h2 className="text-lg md:text-xl font-bold mb-4">
           Workspace Distribution
         </h2>
 
         <ResponsiveContainer
           width="100%"
-          height={350}
+          height={300}
         >
           <PieChart>
             <Pie
               data={report.workspaceUsage}
               dataKey="value"
               nameKey="label"
-              outerRadius={120}
+              outerRadius={100}
               label
             />
             <Tooltip />
