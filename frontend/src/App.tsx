@@ -3,16 +3,17 @@ import MembersView from './components/MembersView';
 import WorkspacesView from './components/WorkspacesView';
 import ReservationsView from './components/ReservationsView';
 import EquipmentView from './components/EquipmentView';
-
+import ReportDashboard from "./components/ReportDashboard";
 function App() {
   const [activeTab, setActiveTab] = useState('members');
 
   const tabs = [
-    { id: 'members', name: 'Members', icon: '👥' },
-    { id: 'workspaces', name: 'Workspaces', icon: '🏢' },
-    { id: 'reservations', name: 'Reservations', icon: '📅' },
-    { id: 'equipment', name: 'Equipment', icon: '🛠️' },
-  ];
+  { id: 'members', name: 'Members', icon: '👥' },
+  { id: 'workspaces', name: 'Workspaces', icon: '🏢' },
+  { id: 'reservations', name: 'Reservations', icon: '📅' },
+  { id: 'equipment', name: 'Equipment', icon: '🛠️' },
+  { id: 'report', name: 'Report', icon: '📊' },
+];
 
   return (
     <div className="flex h-screen bg-gray-100 font-sans">
@@ -55,6 +56,7 @@ function App() {
             {activeTab === 'workspaces' && <WorkspacesView />}
             {activeTab === 'reservations' && <ReservationsView />}
             {activeTab === 'equipment' && <EquipmentView />}
+            {activeTab === 'report' && <ReportDashboard />}
           </div>
         </main>
       </div>

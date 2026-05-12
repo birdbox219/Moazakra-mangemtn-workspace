@@ -29,10 +29,40 @@ namespace WebApplication1.Controllers
             return Ok();
         }
 
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateMember(int id, [FromBody] Member member)
+        {
+            member.MemberID = id;
+            await _db.UpdateMemberAsync(member);
+            return Ok();
+        }
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteMember(int id)
         {
             await _db.DeleteMemberAsync(id);
+            return Ok();
+        }
+
+        [HttpGet("{id}/phones")]
+        public async Task<IActionResult> GetPhones(int id)
+        {
+            var memberPhones = await _db.GetMemberPhonesAsync(id);
+            return Ok(memberPhones);
+        }
+        
+        [HttpPost("{id}/phones")]
+        public async Task<IActionResult> AddPhone(int id, [FromBody] MemberPhone phone)
+        {
+            phone.MemberID = id;
+            await _db.AddMemberPhoneAsync(phone);
+            return Ok();
+        }
+
+        [HttpDelete("phones/{phoneId}")]
+        public async Task<IActionResult> DeletePhone(int phoneId)
+        {
+            await _db.DeleteMemberPhoneAsync(phoneId);
             return Ok();
         }
     }

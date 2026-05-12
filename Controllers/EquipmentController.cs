@@ -18,14 +18,22 @@ namespace WebApplication1.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Equipment>>> GetEquipment()
         {
-            var equipment = await _db.GetEquipmentAsync();
-            return Ok(equipment);
+            var equipments = await _db.GetEquipmentAsync();
+            return Ok(equipments);
         }
 
         [HttpPost]
         public async Task<IActionResult> AddEquipment([FromBody] Equipment eq)
         {
             await _db.AddEquipmentAsync(eq);
+            return Ok();
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateEquipment(int id, [FromBody] Equipment eq)
+        {
+            eq.EquipmentID = id;
+            await _db.UpdateEquipmentAsync(eq);
             return Ok();
         }
 

@@ -2,9 +2,13 @@ const API_BASE_URL = 'http://localhost:5031/api';
 
 export interface Member {
   memberID?: number;
-  name: string;
+  fName: string;
+  lName: string;
+  nickName?: string;
   email: string;
+  digitalID?: string;
   company: string;
+  phoneNumbers?: string[];
 }
 
 export interface Workspace {
@@ -13,6 +17,7 @@ export interface Workspace {
   price: number;
   capacity: number;
   hubID: number;
+  hubName?: string;
 }
 
 export interface Reservation {
@@ -33,8 +38,46 @@ export interface Equipment {
 }
 
 export interface Hub {
-  hubID: number;
+  hubID?: number;
   name: string;
+  street?: string;
+  city?: string;
+  district?: string;
+  building?: string;
+  layout?: string;
+}
+
+export interface MemberPhone {
+  phoneID?: number;
+  memberID: number;
+  phoneNumber: string;
+  memberName?: string;
+}
+
+export interface ReservationEquipment {
+  reservationID: number;
+  equipmentID: number;
+  hoursUsed: number;
+  equipmentName?: string;
+  equipmentType?: string;
+  memberName?: string;
+  workspaceType?: string;
+}
+
+export interface EquipmentPerHub {
+  hubName: string;
+  equipmentName: string;
+  equipmentType: string;
+  totalHours: number;
+}
+
+export interface MemberHours {
+  memberID: number;
+  fName: string;
+  lName: string;
+  email: string;
+  company: string;
+  totalHours: number;
 }
 
 export const api = {
@@ -74,5 +117,38 @@ export const api = {
       body: JSON.stringify(data)
     }),
     delete: (id: number) => fetch(`${API_BASE_URL}/equipment/${id}`, { method: 'DELETE' })
+  },
+ report: {
+  getDashboard: (
+    startDate?: string,
+    endDate?: string
+  ) => {
+    let url =
+      `${API_BASE_URL}/report/dashboard`;
+
+    const params =
+      new URLSearchParams();
+
+    if (startDate) {
+      params.append(
+        "startDate",
+        startDate
+      );
+    }
+
+    if (endDate) {
+      params.append(
+        "endDate",
+        endDate
+      );
+    }
+
+    if (params.toString()) {
+      url += `?${params.toString()}`;
+    }
+
+    return fetch(url)
+      .then(res => res.json());
   }
+} 
 };
