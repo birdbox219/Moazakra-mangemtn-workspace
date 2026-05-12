@@ -90,12 +90,12 @@ lint/tmp/
 *.hprof
 
 # Cordova plugins for Capacitor
-capacitor-cordova-android-plugins
+# capacitor-cordova-android-plugins  # INCLUDED — needed for standalone Android Studio builds
 
 # Copied web assets
-app/src/main/assets/public
+# app/src/main/assets/public  # INCLUDED — needed for standalone Android Studio builds
 
 # Generated Config files
-app/src/main/assets/capacitor.config.json
-app/src/main/assets/capacitor.plugins.json
-app/src/main/res/xml/config.xml
+# app/src/main/assets/capacitor.config.json  # INCLUDED — needed for standalone Android Studio builds
+# app/src/main/assets/capacitor.plugins.json  # INCLUDED — needed for standalone Android Studio builds
+# app/src/main/res/xml/config.xml  # INCLUDED — needed for standalone Android Studio builds
