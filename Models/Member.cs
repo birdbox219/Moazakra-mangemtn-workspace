@@ -1,3 +1,7 @@
+using System;
+using System.Collections.Generic;
+using Microsoft.Data.SqlClient;
+
 namespace WebApplication1.Models
 {
     public class Member
@@ -15,5 +19,19 @@ namespace WebApplication1.Models
 
         // Navigation
         public List<string>? PhoneNumbers { get; set; }
+
+        public static Member FromReader(SqlDataReader reader)
+        {
+            return new Member
+            {
+                MemberID = reader.GetInt32(reader.GetOrdinal("MemberID")),
+                FName = reader.GetString(reader.GetOrdinal("FName")),
+                LName = reader.GetString(reader.GetOrdinal("LName")),
+                NickName = reader.IsDBNull(reader.GetOrdinal("NickName")) ? null : reader.GetString(reader.GetOrdinal("NickName")),
+                Email = reader.GetString(reader.GetOrdinal("Email")),
+                DigitalID = reader.IsDBNull(reader.GetOrdinal("DigitalID")) ? null : reader.GetString(reader.GetOrdinal("DigitalID")),
+                Company = reader.GetString(reader.GetOrdinal("Company"))
+            };
+        }
     }
 }

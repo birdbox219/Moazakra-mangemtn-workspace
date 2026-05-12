@@ -3,7 +3,8 @@ import { api, type Member } from '../api';
 
 export default function MembersView() {
   const [members, setMembers] = useState<Member[]>([]);
-  const [formData, setFormData] = useState<Member>({ fName: '', lName: '', email: '', company: '' });
+  const [formData, setFormData] = useState<Member>({ fName: '', lName: '', nickName: '', email: '', digitalID: '', company: '' });
+  const [phoneInput, setPhoneInput] = useState('');
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [loading, setLoading] = useState(true);
   const [deleteModal, setDeleteModal] = useState<{
@@ -84,8 +85,13 @@ export default function MembersView() {
     }
 
     try {
-      await api.members.add(formData);
-      setFormData({ fName: '', lName: '', email: '', company: '' });
+      const payload = { 
+        ...formData, 
+        phoneNumbers: phoneInput.split(',').map(p => p.trim()).filter(p => p) 
+      };
+      await api.members.add(payload);
+      setFormData({ fName: '', lName: '', nickName: '', email: '', digitalID: '', company: '' });
+      setPhoneInput('');
       setErrors({});
       fetchMembers();
     } catch (err) {
@@ -187,7 +193,7 @@ export default function MembersView() {
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {/* First Name Field */}
           <div>
             <input
@@ -226,6 +232,18 @@ export default function MembersView() {
             )}
           </div>
 
+          {/* Nick Name Field */}
+          <div>
+            <input
+              type="text"
+              name="nickName"
+              placeholder="Nick Name (Optional)"
+              className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none transition-all"
+              value={formData.nickName}
+              onChange={handleInputChange}
+            />
+          </div>
+
           {/* Email Field */}
           <div>
             <input
@@ -245,30 +263,55 @@ export default function MembersView() {
             )}
           </div>
 
-          {/* Company & Submit */}
-          <div className="flex gap-4 flex-col md:flex-row">
-            <div className="flex-1">
-              <input
-                type="text"
-                name="company"
-                placeholder="Company"
-                className={`w-full p-3 border rounded-xl focus:ring-2 outline-none transition-all ${
-                  errors.company
-                    ? 'border-red-500 bg-red-50 focus:ring-red-500'
-                    : 'border-gray-200 focus:ring-indigo-500'
-                }`}
-                value={formData.company}
-                onChange={handleInputChange}
-              />
-              {errors.company && (
-                <p className="text-red-500 text-sm mt-1 font-medium">{errors.company}</p>
-              )}
-            </div>
+          {/* Digital ID Field */}
+          <div>
+            <input
+              type="text"
+              name="digitalID"
+              placeholder="Digital ID (Optional)"
+              className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none transition-all"
+              value={formData.digitalID}
+              onChange={handleInputChange}
+            />
+          </div>
+
+          {/* Company Field */}
+          <div>
+            <input
+              type="text"
+              name="company"
+              placeholder="Company"
+              className={`w-full p-3 border rounded-xl focus:ring-2 outline-none transition-all ${
+                errors.company
+                  ? 'border-red-500 bg-red-50 focus:ring-red-500'
+                  : 'border-gray-200 focus:ring-indigo-500'
+              }`}
+              value={formData.company}
+              onChange={handleInputChange}
+            />
+            {errors.company && (
+              <p className="text-red-500 text-sm mt-1 font-medium">{errors.company}</p>
+            )}
+          </div>
+
+          {/* Phone Numbers Field */}
+          <div>
+            <input
+              type="text"
+              placeholder="Phone Numbers (comma separated)"
+              className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none transition-all"
+              value={phoneInput}
+              onChange={(e) => setPhoneInput(e.target.value)}
+            />
+          </div>
+
+          {/* Submit Button */}
+          <div className="lg:col-span-3 flex justify-end mt-2">
             <button
               type="submit"
-              className="bg-indigo-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-indigo-700 transition-colors shadow-lg shadow-indigo-200 h-fit"
+              className="bg-indigo-600 text-white px-8 py-3 rounded-xl font-semibold hover:bg-indigo-700 transition-colors shadow-lg shadow-indigo-200"
             >
-              Add
+              Add Member
             </button>
           </div>
         </form>
@@ -286,6 +329,9 @@ export default function MembersView() {
             <thead className="bg-gray-50 text-gray-500 text-sm uppercase tracking-wider">
               <tr>
                 <th className="px-8 py-4 font-semibold">Name</th>
+                <th className="px-8 py-4 font-semibold">Nickname</th>
+                <th className="px-8 py-4 font-semibold">Digital ID</th>
+                <th className="px-8 py-4 font-semibold">Phone</th>
                 <th className="px-8 py-4 font-semibold">Email</th>
                 <th className="px-8 py-4 font-semibold">Company</th>
                 <th className="px-8 py-4 font-semibold text-right">Actions</th>
@@ -295,6 +341,27 @@ export default function MembersView() {
               {members.map((member) => (
                 <tr key={member.memberID} className="hover:bg-gray-50/80 transition-colors">
                   <td className="px-8 py-4 font-medium text-gray-900">{member.fullName || `${member.fName} ${member.lName}`}</td>
+                  <td className="px-8 py-4 text-gray-500">{member.nickName || <span className="text-gray-300 italic">-</span>}</td>
+                  <td className="px-8 py-4">
+                    {member.digitalID ? (
+                      <span className="font-mono text-xs text-indigo-700 bg-indigo-50 px-2 py-1 rounded-md border border-indigo-100">
+                        {member.digitalID}
+                      </span>
+                    ) : (
+                      <span className="text-gray-300 italic">-</span>
+                    )}
+                  </td>
+                  <td className="px-8 py-4 text-gray-600">
+                    {member.phoneNumbers && member.phoneNumbers.length > 0 ? (
+                      <div className="flex flex-col gap-1">
+                        {member.phoneNumbers.map((p, idx) => (
+                          <span key={idx} className="text-sm bg-gray-100 px-2 py-1 rounded text-gray-700">{p}</span>
+                        ))}
+                      </div>
+                    ) : (
+                      <span className="text-gray-300 italic">-</span>
+                    )}
+                  </td>
                   <td className="px-8 py-4 text-gray-600">{member.email}</td>
                   <td className="px-8 py-4 text-gray-600">{member.company}</td>
                   <td className="px-8 py-4 text-right">
@@ -309,7 +376,7 @@ export default function MembersView() {
               ))}
               {members.length === 0 && (
                 <tr>
-                  <td colSpan={4} className="px-8 py-12 text-center text-gray-400 italic">
+                  <td colSpan={7} className="px-8 py-12 text-center text-gray-400 italic">
                     No members found. Add your first member above!
                   </td>
                 </tr>

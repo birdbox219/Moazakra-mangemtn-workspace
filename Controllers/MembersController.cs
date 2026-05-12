@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using WebApplication1.Data;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using WebApplication1.Interfaces;
 using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
@@ -8,24 +10,24 @@ namespace WebApplication1.Controllers
     [Route("api/[controller]")]
     public class MembersController : ControllerBase
     {
-        private readonly DatabaseService _db;
+        private readonly IMemberService _memberService;
 
-        public MembersController(DatabaseService db)
+        public MembersController(IMemberService memberService)
         {
-            _db = db;
+            _memberService = memberService;
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Member>>> GetMembers()
         {
-            var members = await _db.GetMembersAsync();
+            var members = await _memberService.GetMembersAsync();
             return Ok(members);
         }
 
         [HttpPost]
         public async Task<IActionResult> AddMember([FromBody] Member member)
         {
-            await _db.AddMemberAsync(member);
+            await _memberService.AddMemberAsync(member);
             return Ok();
         }
 
@@ -33,21 +35,21 @@ namespace WebApplication1.Controllers
         public async Task<IActionResult> UpdateMember(int id, [FromBody] Member member)
         {
             member.MemberID = id;
-            await _db.UpdateMemberAsync(member);
+            await _memberService.UpdateMemberAsync(member);
             return Ok();
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteMember(int id)
         {
-            await _db.DeleteMemberAsync(id);
+            await _memberService.DeleteMemberAsync(id);
             return Ok();
         }
 
         [HttpGet("{id}/phones")]
         public async Task<IActionResult> GetPhones(int id)
         {
-            var memberPhones = await _db.GetMemberPhonesAsync(id);
+            var memberPhones = await _memberService.GetMemberPhonesAsync(id);
             return Ok(memberPhones);
         }
         
@@ -55,14 +57,14 @@ namespace WebApplication1.Controllers
         public async Task<IActionResult> AddPhone(int id, [FromBody] MemberPhone phone)
         {
             phone.MemberID = id;
-            await _db.AddMemberPhoneAsync(phone);
+            await _memberService.AddMemberPhoneAsync(phone);
             return Ok();
         }
 
         [HttpDelete("phones/{phoneId}")]
         public async Task<IActionResult> DeletePhone(int phoneId)
         {
-            await _db.DeleteMemberPhoneAsync(phoneId);
+            await _memberService.DeleteMemberPhoneAsync(phoneId);
             return Ok();
         }
     }
