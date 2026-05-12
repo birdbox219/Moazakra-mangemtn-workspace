@@ -6,7 +6,9 @@ export interface Member {
   lName: string;
   fullName?: string;
   email: string;
+  digitalID?: string;
   company: string;
+  phoneNumbers?: string[];
 }
 
 export interface Workspace {
@@ -15,6 +17,7 @@ export interface Workspace {
   price: number;
   capacity: number;
   hubID: number;
+  hubName?: string;
 }
 
 export interface Reservation {
@@ -35,8 +38,46 @@ export interface Equipment {
 }
 
 export interface Hub {
-  hubID: number;
+  hubID?: number;
   name: string;
+  street?: string;
+  city?: string;
+  district?: string;
+  building?: string;
+  layout?: string;
+}
+
+export interface MemberPhone {
+  phoneID?: number;
+  memberID: number;
+  phoneNumber: string;
+  memberName?: string;
+}
+
+export interface ReservationEquipment {
+  reservationID: number;
+  equipmentID: number;
+  hoursUsed: number;
+  equipmentName?: string;
+  equipmentType?: string;
+  memberName?: string;
+  workspaceType?: string;
+}
+
+export interface EquipmentPerHub {
+  hubName: string;
+  equipmentName: string;
+  equipmentType: string;
+  totalHours: number;
+}
+
+export interface MemberHours {
+  memberID: number;
+  fName: string;
+  lName: string;
+  email: string;
+  company: string;
+  totalHours: number;
 }
 
 export const api = {

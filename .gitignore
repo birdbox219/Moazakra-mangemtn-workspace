@@ -26,4 +26,5 @@ Thumbs.db
 *.log
 *.jsonl
 
-#agent
+# Agents
+.agents/
