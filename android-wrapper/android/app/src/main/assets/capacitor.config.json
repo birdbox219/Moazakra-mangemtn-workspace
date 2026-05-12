@@ -1,5 +1,8 @@
 {
 	"appId": "com.mozakrah.managementhub",
 	"appName": "Mozakrah Management Hub",
-	"webDir": "../frontend/dist"
+	"webDir": "../frontend/dist",
+	"server": {
+		"androidScheme": "http"
+	}
 }
