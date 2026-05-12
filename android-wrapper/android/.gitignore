@@ -99,3 +99,6 @@ lint/tmp/
 # app/src/main/assets/capacitor.config.json  # INCLUDED — needed for standalone Android Studio builds
 # app/src/main/assets/capacitor.plugins.json  # INCLUDED — needed for standalone Android Studio builds
 # app/src/main/res/xml/config.xml  # INCLUDED — needed for standalone Android Studio builds
+
+# Local Capacitor Library
+# capacitor-android  # INCLUDED — needed for standalone Android Studio builds
