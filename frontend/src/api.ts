@@ -4,7 +4,7 @@ export interface Member {
   memberID?: number;
   fName: string;
   lName: string;
-  nickName?: string;
+  fullName?: string;
   email: string;
   digitalID?: string;
   company: string;

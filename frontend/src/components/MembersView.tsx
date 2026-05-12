@@ -3,8 +3,7 @@ import { api, type Member } from '../api';
 
 export default function MembersView() {
   const [members, setMembers] = useState<Member[]>([]);
-  const [formData, setFormData] = useState<Member>({ name: '', email: '', company: '' });
-  const [errors, setErrors] = useState<{ [key: string]: string }>({});
+  const [formData, setFormData] = useState<Member>({ fName: '', lName: '', email: '', company: '' });
   const [loading, setLoading] = useState(true);
   const [deleteModal, setDeleteModal] = useState<{
     isOpen: boolean;
@@ -74,6 +73,9 @@ export default function MembersView() {
   // Handle form submission
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    await api.members.add(formData);
+    setFormData({ fName: '', lName: '', email: '', company: '' });
+    fetchMembers();
 
     // Validate before submitting
     if (!validateForm()) {
@@ -176,6 +178,32 @@ export default function MembersView() {
       {/* Form Card */}
       <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
         <h2 className="text-lg font-bold text-gray-800 mb-6">Add New Member</h2>
+        <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <input
+            type="text"
+            placeholder="First Name"
+            className="p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none transition-all"
+            value={formData.fName}
+            onChange={(e) => setFormData({ ...formData, fName: e.target.value })}
+            required
+          />
+          <input
+            type="text"
+            placeholder="Last Name"
+            className="p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none transition-all"
+            value={formData.lName}
+            onChange={(e) => setFormData({ ...formData, lName: e.target.value })}
+            required
+          />
+          <input
+            type="email"
+            placeholder="Email"
+            className="p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none transition-all"
+            value={formData.email}
+            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+            required
+          />
+          <div className="flex gap-4">
 
         {/* Display submit error if any */}
         {errors.submit && (
@@ -272,7 +300,7 @@ export default function MembersView() {
             <tbody className="divide-y divide-gray-100">
               {members.map((member) => (
                 <tr key={member.memberID} className="hover:bg-gray-50/80 transition-colors">
-                  <td className="px-8 py-4 font-medium text-gray-900">{member.name}</td>
+                  <td className="px-8 py-4 font-medium text-gray-900">{member.fullName || `${member.fName} ${member.lName}`}</td>
                   <td className="px-8 py-4 text-gray-600">{member.email}</td>
                   <td className="px-8 py-4 text-gray-600">{member.company}</td>
                   <td className="px-8 py-4 text-right">
