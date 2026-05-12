@@ -2,4 +2,8 @@ include ':app'
 include ':capacitor-cordova-android-plugins'
 project(':capacitor-cordova-android-plugins').projectDir = new File('./capacitor-cordova-android-plugins/')
 
+// Local Capacitor Library (Self-contained)
+include ':capacitor-android'
+project(':capacitor-android').projectDir = new File('./capacitor-android')
+
 apply from: 'capacitor.settings.gradle'
