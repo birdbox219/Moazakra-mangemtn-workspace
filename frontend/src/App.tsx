@@ -20,7 +20,7 @@ function App() {
       {/* Sidebar */}
       <div className="w-64 bg-indigo-700 text-white flex flex-col shadow-xl">
         <div className="p-6 text-2xl font-bold border-b border-indigo-600 bg-indigo-800">
-          Workspace Hub
+          Mozakrah Management Hub
         </div>
         <nav className="flex-1 mt-6">
           {tabs.map((tab) => (
@@ -39,7 +39,7 @@ function App() {
           ))}
         </nav>
         <div className="p-4 text-xs text-indigo-300 text-center border-t border-indigo-600">
-          © 2026 Workspace Management
+          © 2026 Mozakrah Management
         </div>
       </div>
 
