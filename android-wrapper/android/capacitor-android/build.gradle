@@ -66,11 +66,9 @@ android {
         sourceCompatibility JavaVersion.VERSION_21
         targetCompatibility JavaVersion.VERSION_21
     }
-/*
     publishing {
-        singleVariant("release")
+        // allVariants() // This is usually default for libraries, but we can be explicit
     }
-*/
 }
 
 repositories {

@@ -1,4 +1,6 @@
 include ':app'
+
+// Capacitor Plugins
 include ':capacitor-cordova-android-plugins'
 project(':capacitor-cordova-android-plugins').projectDir = new File('./capacitor-cordova-android-plugins/')
 
@@ -6,4 +8,4 @@ project(':capacitor-cordova-android-plugins').projectDir = new File('./capacitor
 include ':capacitor-android'
 project(':capacitor-android').projectDir = new File('./capacitor-android')
 
-apply from: 'capacitor.settings.gradle'
+// apply from: 'capacitor.settings.gradle' (Disabled to prevent overwriting fixes)
