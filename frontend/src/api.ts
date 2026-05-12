@@ -1,4 +1,4 @@
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5031/api';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://192.168.100.76:5031/api';
 
 export interface Member {
   memberID?: number;
