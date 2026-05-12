@@ -2,7 +2,9 @@ const API_BASE_URL = 'http://localhost:5031/api';
 
 export interface Member {
   memberID?: number;
-  name: string;
+  fName: string;
+  lName: string;
+  fullName?: string;
   email: string;
   company: string;
 }
