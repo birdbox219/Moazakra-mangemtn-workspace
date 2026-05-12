@@ -4,6 +4,7 @@ import { api, type Member } from '../api';
 export default function MembersView() {
   const [members, setMembers] = useState<Member[]>([]);
   const [formData, setFormData] = useState<Member>({ fName: '', lName: '', email: '', company: '' });
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [loading, setLoading] = useState(true);
   const [deleteModal, setDeleteModal] = useState<{
     isOpen: boolean;
@@ -44,8 +45,11 @@ export default function MembersView() {
   const validateForm = () => {
     const newErrors: { [key: string]: string } = {};
 
-    if (!formData.name?.trim()) {
-      newErrors.name = 'Name is required';
+    if (!formData.fName?.trim()) {
+      newErrors.fName = 'First Name is required';
+    }
+    if (!formData.lName?.trim()) {
+      newErrors.lName = 'Last Name is required';
     }
     if (!formData.email?.trim()) {
       newErrors.email = 'Email is required';
@@ -73,9 +77,6 @@ export default function MembersView() {
   // Handle form submission
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await api.members.add(formData);
-    setFormData({ fName: '', lName: '', email: '', company: '' });
-    fetchMembers();
 
     // Validate before submitting
     if (!validateForm()) {
@@ -84,7 +85,7 @@ export default function MembersView() {
 
     try {
       await api.members.add(formData);
-      setFormData({ name: '', email: '', company: '' });
+      setFormData({ fName: '', lName: '', email: '', company: '' });
       setErrors({});
       fetchMembers();
     } catch (err) {
@@ -178,32 +179,6 @@ export default function MembersView() {
       {/* Form Card */}
       <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
         <h2 className="text-lg font-bold text-gray-800 mb-6">Add New Member</h2>
-        <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <input
-            type="text"
-            placeholder="First Name"
-            className="p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none transition-all"
-            value={formData.fName}
-            onChange={(e) => setFormData({ ...formData, fName: e.target.value })}
-            required
-          />
-          <input
-            type="text"
-            placeholder="Last Name"
-            className="p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none transition-all"
-            value={formData.lName}
-            onChange={(e) => setFormData({ ...formData, lName: e.target.value })}
-            required
-          />
-          <input
-            type="email"
-            placeholder="Email"
-            className="p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none transition-all"
-            value={formData.email}
-            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-            required
-          />
-          <div className="flex gap-4">
 
         {/* Display submit error if any */}
         {errors.submit && (
@@ -212,23 +187,42 @@ export default function MembersView() {
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {/* Name Field */}
+        <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {/* First Name Field */}
           <div>
             <input
               type="text"
-              name="name"
-              placeholder="Name"
+              name="fName"
+              placeholder="First Name"
               className={`w-full p-3 border rounded-xl focus:ring-2 outline-none transition-all ${
-                errors.name
+                errors.fName
                   ? 'border-red-500 bg-red-50 focus:ring-red-500'
                   : 'border-gray-200 focus:ring-indigo-500'
               }`}
-              value={formData.name}
+              value={formData.fName}
               onChange={handleInputChange}
             />
-            {errors.name && (
-              <p className="text-red-500 text-sm mt-1 font-medium">{errors.name}</p>
+            {errors.fName && (
+              <p className="text-red-500 text-sm mt-1 font-medium">{errors.fName}</p>
+            )}
+          </div>
+
+          {/* Last Name Field */}
+          <div>
+            <input
+              type="text"
+              name="lName"
+              placeholder="Last Name"
+              className={`w-full p-3 border rounded-xl focus:ring-2 outline-none transition-all ${
+                errors.lName
+                  ? 'border-red-500 bg-red-50 focus:ring-red-500'
+                  : 'border-gray-200 focus:ring-indigo-500'
+              }`}
+              value={formData.lName}
+              onChange={handleInputChange}
+            />
+            {errors.lName && (
+              <p className="text-red-500 text-sm mt-1 font-medium">{errors.lName}</p>
             )}
           </div>
 
@@ -252,7 +246,7 @@ export default function MembersView() {
           </div>
 
           {/* Company & Submit */}
-          <div className="flex gap-4 flex-col md:flex-row md:col-span-1">
+          <div className="flex gap-4 flex-col md:flex-row">
             <div className="flex-1">
               <input
                 type="text"
@@ -305,7 +299,7 @@ export default function MembersView() {
                   <td className="px-8 py-4 text-gray-600">{member.company}</td>
                   <td className="px-8 py-4 text-right">
                     <button
-                      onClick={() => checkReservations(member.memberID!, member.name)}
+                      onClick={() => checkReservations(member.memberID!, member.fullName || `${member.fName} ${member.lName}`)}
                       className="text-red-500 hover:text-red-700 font-medium px-3 py-1 rounded-lg hover:bg-red-50 transition-colors"
                     >
                       Delete
