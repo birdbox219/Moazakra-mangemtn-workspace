@@ -1,3 +1,5 @@
+using Microsoft.Data.SqlClient;
+
 namespace WebApplication1.Models
 {
     public class Workspace
@@ -10,5 +12,18 @@ namespace WebApplication1.Models
 
         // Navigation
         public string? HubName { get; set; }
+
+        public static Workspace FromReader(SqlDataReader reader)
+        {
+            return new Workspace
+            {
+                WorkspaceID = reader.GetInt32(reader.GetOrdinal("WorkspaceID")),
+                Type = reader.GetString(reader.GetOrdinal("Type")),
+                Price = reader.GetDecimal(reader.GetOrdinal("Price")),
+                Capacity = reader.GetInt32(reader.GetOrdinal("Capacity")),
+                HubID = reader.GetInt32(reader.GetOrdinal("HubID")),
+                HubName = reader.GetString(reader.GetOrdinal("HubName"))
+            };
+        }
     }
 }

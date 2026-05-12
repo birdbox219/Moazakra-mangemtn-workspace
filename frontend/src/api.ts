@@ -4,6 +4,7 @@ export interface Member {
   memberID?: number;
   fName: string;
   lName: string;
+  nickName?: string;
   fullName?: string;
   email: string;
   digitalID?: string;
@@ -150,5 +151,19 @@ export const api = {
     return fetch(url)
       .then(res => res.json());
   }
-} 
+},
+  hubs: {
+    getAll: () => fetch(`${API_BASE_URL}/hubs`).then(res => res.json()),
+    add: (data: Hub) => fetch(`${API_BASE_URL}/hubs`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    }),
+    update: (id: number, data: Hub) => fetch(`${API_BASE_URL}/hubs/${id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    }),
+    delete: (id: number) => fetch(`${API_BASE_URL}/hubs/${id}`, { method: 'DELETE' })
+  }
 };

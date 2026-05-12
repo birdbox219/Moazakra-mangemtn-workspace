@@ -4,11 +4,13 @@ import WorkspacesView from './components/WorkspacesView';
 import ReservationsView from './components/ReservationsView';
 import EquipmentView from './components/EquipmentView';
 import ReportDashboard from "./components/ReportDashboard";
+import HubsView from './components/HubsView';
 function App() {
   const [activeTab, setActiveTab] = useState('members');
 
   const tabs = [
   { id: 'members', name: 'Members', icon: '👥' },
+  { id: 'hubs', name: 'Hubs', icon: '📍' },
   { id: 'workspaces', name: 'Workspaces', icon: '🏢' },
   { id: 'reservations', name: 'Reservations', icon: '📅' },
   { id: 'equipment', name: 'Equipment', icon: '🛠️' },
@@ -53,6 +55,7 @@ function App() {
         <main className="flex-1 overflow-y-auto p-8">
           <div className="max-w-6xl mx-auto">
             {activeTab === 'members' && <MembersView />}
+            {activeTab === 'hubs' && <HubsView />}
             {activeTab === 'workspaces' && <WorkspacesView />}
             {activeTab === 'reservations' && <ReservationsView />}
             {activeTab === 'equipment' && <EquipmentView />}

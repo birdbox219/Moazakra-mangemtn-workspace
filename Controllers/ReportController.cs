@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using WebApplication1.Data;
+using System;
+using System.Threading.Tasks;
+using WebApplication1.Interfaces;
 
 namespace WebApplication1.Controllers
 {
@@ -7,29 +9,17 @@ namespace WebApplication1.Controllers
     [Route("api/[controller]")]
     public class ReportController : ControllerBase
     {
-        private readonly DatabaseService _db;
+        private readonly IReportService _reportService;
 
-        public ReportController(
-            DatabaseService db
-        )
+        public ReportController(IReportService reportService)
         {
-            _db = db;
+            _reportService = reportService;
         }
 
         [HttpGet("dashboard")]
-        public async Task<IActionResult>
-            GetDashboard(
-                DateTime? startDate,
-                DateTime? endDate
-            )
+        public async Task<IActionResult> GetDashboard(DateTime? startDate, DateTime? endDate)
         {
-            var report =
-                await _db
-                    .GetDashboardReportAsync(
-                        startDate,
-                        endDate
-                    );
-
+            var report = await _reportService.GetDashboardReportAsync(startDate, endDate);
             return Ok(report);
         }
     }

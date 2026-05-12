@@ -1,4 +1,6 @@
-﻿namespace WebApplication1.Models
+using Microsoft.Data.SqlClient;
+
+namespace WebApplication1.Models
 {
     public class MemberPhone
     {
@@ -8,5 +10,16 @@
 
         // Navigation
         public string? MemberName { get; set; }
+
+        public static MemberPhone FromReader(SqlDataReader reader)
+        {
+            return new MemberPhone
+            {
+                PhoneID = reader.GetInt32(reader.GetOrdinal("PhoneID")),
+                MemberID = reader.GetInt32(reader.GetOrdinal("MemberID")),
+                PhoneNumber = reader.GetString(reader.GetOrdinal("PhoneNumber")),
+                MemberName = reader.GetString(reader.GetOrdinal("MemberName"))
+            };
+        }
     }
 }

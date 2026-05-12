@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using WebApplication1.Data;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using WebApplication1.Interfaces;
 using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
@@ -8,24 +10,24 @@ namespace WebApplication1.Controllers
     [Route("api/[controller]")]
     public class ReservationsController : ControllerBase
     {
-        private readonly DatabaseService _db;
+        private readonly IReservationService _reservationService;
 
-        public ReservationsController(DatabaseService db)
+        public ReservationsController(IReservationService reservationService)
         {
-            _db = db;
+            _reservationService = reservationService;
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Reservation>>> GetReservations()
         {
-            var reservations = await _db.GetReservationsAsync();
+            var reservations = await _reservationService.GetReservationsAsync();
             return Ok(reservations);
         }
 
         [HttpPost]
         public async Task<IActionResult> AddReservation([FromBody] Reservation res)
         {
-            await _db.AddReservationAsync(res);
+            await _reservationService.AddReservationAsync(res);
             return Ok();
         }
 
@@ -33,14 +35,14 @@ namespace WebApplication1.Controllers
         public async Task<IActionResult> UpdateReservation(int id, [FromBody] Reservation res)
         {
             res.ReservationID = id;
-            await _db.UpdateReservationAsync(res);
+            await _reservationService.UpdateReservationAsync(res);
             return Ok();
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteReservation(int id)
         {
-            await _db.DeleteReservationAsync(id);
+            await _reservationService.DeleteReservationAsync(id);
             return Ok();
         }
 
@@ -48,7 +50,7 @@ namespace WebApplication1.Controllers
         [HttpGet("{id}/equipment")]
         public async Task<IActionResult> GetEquipment(int id)
         {
-            var reservationEquipment = await _db.GetReservationEquipmentAsync(id);
+            var reservationEquipment = await _reservationService.GetReservationEquipmentAsync(id);
             return Ok(reservationEquipment);
         }
 
@@ -56,7 +58,7 @@ namespace WebApplication1.Controllers
         public async Task<IActionResult> AddEquipment(int id, [FromBody] ReservationEquipment re)
         {
             re.ReservationID = id;
-            await _db.AddReservationEquipmentAsync(re);
+            await _reservationService.AddReservationEquipmentAsync(re);
             return Ok();
         }
 
@@ -65,14 +67,14 @@ namespace WebApplication1.Controllers
         {
             re.ReservationID = id;
             re.EquipmentID = equipmentId;
-            await _db.UpdateReservationEquipmentAsync(re);
+            await _reservationService.UpdateReservationEquipmentAsync(re);
             return Ok();
         }
 
         [HttpDelete("{id}/equipment/{equipmentId}")]
         public async Task<IActionResult> DeleteEquipment(int id, int equipmentId)
         {
-            await _db.DeleteReservationEquipmentAsync(id, equipmentId);
+            await _reservationService.DeleteReservationEquipmentAsync(id, equipmentId);
             return Ok();
         }
     }

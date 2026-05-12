@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using WebApplication1.Data;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using WebApplication1.Interfaces;
 using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
@@ -8,24 +10,26 @@ namespace WebApplication1.Controllers
     [Route("api/[controller]")]
     public class WorkspacesController : ControllerBase
     {
-        private readonly DatabaseService _db;
+        private readonly IWorkspaceService _workspaceService;
+        private readonly IHubService _hubService;
 
-        public WorkspacesController(DatabaseService db)
+        public WorkspacesController(IWorkspaceService workspaceService, IHubService hubService)
         {
-            _db = db;
+            _workspaceService = workspaceService;
+            _hubService = hubService;
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Workspace>>> GetWorkspaces()
         {
-            var workspaces = await _db.GetWorkspacesAsync();
+            var workspaces = await _workspaceService.GetWorkspacesAsync();
             return Ok(workspaces);
         }
 
         [HttpPost]
         public async Task<IActionResult> AddWorkspace([FromBody] Workspace ws)
         {
-            await _db.AddWorkspaceAsync(ws);
+            await _workspaceService.AddWorkspaceAsync(ws);
             return Ok();
         }
 
@@ -33,14 +37,14 @@ namespace WebApplication1.Controllers
         public async Task<IActionResult> UpdateWorkspace(int id, [FromBody] Workspace ws)
         {
             ws.WorkspaceID = id;
-            await _db.UpdateWorkspaceAsync(ws);
+            await _workspaceService.UpdateWorkspaceAsync(ws);
             return Ok();
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteWorkspace(int id)
         {
-            await _db.DeleteWorkspaceAsync(id);
+            await _workspaceService.DeleteWorkspaceAsync(id);
             return Ok();
         }
         
@@ -48,14 +52,14 @@ namespace WebApplication1.Controllers
         [HttpGet("hubs")]
         public async Task<ActionResult<IEnumerable<Hub>>> GetHubs()
         {
-            var  hubs = await _db.GetHubsAsync();
+            var  hubs = await _hubService.GetHubsAsync();
             return Ok(hubs);
         }
 
         [HttpPost("hubs")]
         public async Task<IActionResult> AddHub([FromBody] Hub hub)
         {
-            await _db.AddHubAsync(hub);
+            await _hubService.AddHubAsync(hub);
             return Ok();
         }
 
@@ -63,14 +67,14 @@ namespace WebApplication1.Controllers
         public async Task<IActionResult> UpdateHub(int id, [FromBody] Hub hub)
         {
             hub.HubID = id;
-            await _db.UpdateHubAsync(hub);
+            await _hubService.UpdateHubAsync(hub);
             return Ok();
         }
 
         [HttpDelete("hubs/{id}")]
         public async Task<IActionResult> DeleteHub(int id)
         {
-            await _db.DeleteHubAsync(id);
+            await _hubService.DeleteHubAsync(id);
             return Ok();
         }
     }
