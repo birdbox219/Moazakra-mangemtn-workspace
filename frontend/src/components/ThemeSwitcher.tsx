@@ -123,7 +123,7 @@ export default function ThemeSwitcher() {
   return (
     <div className="fixed bottom-6 right-6 z-[100] flex flex-col items-end gap-3">
       {/* Theme Options */}
-      <div className={`flex flex-col gap-3 transition-all duration-300 transform max-h-[70vh] overflow-y-auto pr-2 scrollbar-hide ${isOpen ? 'scale-100 opacity-100 translate-y-0' : 'scale-0 opacity-0 translate-y-10'
+      <div className={`flex flex-col gap-3 transition-all duration-300 transform max-h-[70vh] overflow-y-auto pr-2 scrollbar-hide ${isOpen ? 'scale-100 opacity-100 translate-y-0 pointer-events-auto' : 'scale-0 opacity-0 translate-y-10 pointer-events-none'
         }`}>
         {themes.map((t) => (
           <button
