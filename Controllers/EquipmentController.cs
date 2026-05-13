@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using WebApplication1.Data;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using WebApplication1.Interfaces;
 using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
@@ -8,24 +10,24 @@ namespace WebApplication1.Controllers
     [Route("api/[controller]")]
     public class EquipmentController : ControllerBase
     {
-        private readonly DatabaseService _db;
+        private readonly IEquipmentService _equipmentService;
 
-        public EquipmentController(DatabaseService db)
+        public EquipmentController(IEquipmentService equipmentService)
         {
-            _db = db;
+            _equipmentService = equipmentService;
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Equipment>>> GetEquipment()
         {
-            var equipments = await _db.GetEquipmentAsync();
+            var equipments = await _equipmentService.GetEquipmentAsync();
             return Ok(equipments);
         }
 
         [HttpPost]
         public async Task<IActionResult> AddEquipment([FromBody] Equipment eq)
         {
-            await _db.AddEquipmentAsync(eq);
+            await _equipmentService.AddEquipmentAsync(eq);
             return Ok();
         }
 
@@ -33,14 +35,14 @@ namespace WebApplication1.Controllers
         public async Task<IActionResult> UpdateEquipment(int id, [FromBody] Equipment eq)
         {
             eq.EquipmentID = id;
-            await _db.UpdateEquipmentAsync(eq);
+            await _equipmentService.UpdateEquipmentAsync(eq);
             return Ok();
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteEquipment(int id)
         {
-            await _db.DeleteEquipmentAsync(id);
+            await _equipmentService.DeleteEquipmentAsync(id);
             return Ok();
         }
     }

@@ -70,7 +70,7 @@ export default function ReservationsView() {
               onChange={(e) => setFormData({ ...formData, memberID: parseInt(e.target.value) })}
               required
             >
-              {members.map(m => <option key={m.memberID} value={m.memberID}>{m.name}</option>)}
+              {members.map(m => <option key={m.memberID} value={m.memberID}>{m.fullName || `${m.fName} ${m.lName}`}</option>)}
             </select>
           </div>
           <div className="space-y-2">
