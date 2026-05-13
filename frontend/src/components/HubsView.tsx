@@ -6,6 +6,20 @@ export default function HubsView() {
   const [formData, setFormData] = useState<Hub>({ name: '', street: '', city: '', district: '', building: '', layout: '' });
   const [loading, setLoading] = useState(true);
 
+  const [deleteModal, setDeleteModal] = useState<{
+    isOpen: boolean;
+    hubId: number | null;
+    hubName: string;
+    workspaceCount: number;
+    reservationCount: number;
+  }>({
+    isOpen: false,
+    hubId: null,
+    hubName: '',
+    workspaceCount: 0,
+    reservationCount: 0,
+  });
+
   const fetchHubs = async () => {
     try {
       const data = await api.hubs.getAll();
@@ -40,16 +54,73 @@ export default function HubsView() {
     }
   };
 
-  const handleDelete = async (id: number) => {
-    if (confirm('Are you sure you want to delete this hub?')) {
-      try {
-        await api.hubs.delete(id);
-        fetchHubs();
-      } catch (err) {
-        console.error('Error deleting hub:', err);
-        alert('Failed to delete hub. Ensure there are no dependent workspaces.');
-      }
+  const checkDependencies = async (hubId: number, hubName: string) => {
+    try {
+      const [workspaces, reservations] = await Promise.all([
+        api.workspaces.getAll(),
+        api.reservations.getAll()
+      ]);
+
+      const hubWorkspaces = workspaces.filter((ws: any) => ws.hubID === hubId);
+      const wsIds = hubWorkspaces.map((ws: any) => ws.workspaceID);
+      const hubReservations = reservations.filter((res: any) => wsIds.includes(res.workspaceID));
+
+      setDeleteModal({
+        isOpen: true,
+        hubId,
+        hubName,
+        workspaceCount: hubWorkspaces.length,
+        reservationCount: hubReservations.length,
+      });
+    } catch (err) {
+      console.error('Error checking dependencies:', err);
+      setDeleteModal({
+        isOpen: true,
+        hubId,
+        hubName,
+        workspaceCount: 0,
+        reservationCount: 0,
+      });
     }
+  };
+
+  const handleDeleteConfirm = async () => {
+    if (deleteModal.hubId === null) return;
+
+    try {
+      // 1. Fetch dependencies
+      const [workspaces, reservations] = await Promise.all([
+        api.workspaces.getAll(),
+        api.reservations.getAll()
+      ]);
+
+      const hubWorkspaces = workspaces.filter((ws: any) => ws.hubID === deleteModal.hubId);
+      const wsIds = hubWorkspaces.map((ws: any) => ws.workspaceID);
+      const hubReservations = reservations.filter((res: any) => wsIds.includes(res.workspaceID));
+
+      // 2. Delete reservations first
+      for (const res of hubReservations) {
+        await api.reservations.delete(res.reservationID);
+      }
+
+      // 3. Delete workspaces
+      for (const ws of hubWorkspaces) {
+        await api.workspaces.delete(ws.workspaceID);
+      }
+
+      // 4. Delete hub
+      await api.hubs.delete(deleteModal.hubId);
+      
+      setDeleteModal({ isOpen: false, hubId: null, hubName: '', workspaceCount: 0, reservationCount: 0 });
+      fetchHubs();
+    } catch (err) {
+      console.error('Error deleting hub:', err);
+      alert('Failed to decommission hub');
+    }
+  };
+
+  const handleDeleteCancel = () => {
+    setDeleteModal({ isOpen: false, hubId: null, hubName: '', workspaceCount: 0, reservationCount: 0 });
   };
 
   return (
@@ -180,7 +251,7 @@ export default function HubsView() {
                   </td>
                   <td className="px-8 py-6 text-right">
                     <button
-                      onClick={() => handleDelete(hub.hubID!)}
+                      onClick={() => checkDependencies(hub.hubID!, hub.name)}
                       className="text-red-500 hover:text-red-400 font-bold text-xs uppercase tracking-widest px-4 py-2 rounded-xl hover:bg-red-500/10 transition-all border border-transparent hover:border-red-500/20"
                     >
                       Decommission
@@ -200,6 +271,63 @@ export default function HubsView() {
           </div>
         )}
       </div>
+
+      {/* Delete Confirmation Modal */}
+      {deleteModal.isOpen && (
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-md flex items-center justify-center z-[200] p-4">
+          <div className="glass rounded-3xl shadow-2xl p-10 max-w-md w-full animate-in fade-in zoom-in duration-500 border border-red-500/20">
+            <div className="w-16 h-16 bg-red-500/10 text-red-500 rounded-2xl flex items-center justify-center mb-6 mx-auto">
+              <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+              </svg>
+            </div>
+            
+            <h3 className="text-2xl font-display font-black text-text-main mb-4 text-center">
+              Decommission Hub?
+            </h3>
+
+            {(deleteModal.workspaceCount > 0 || deleteModal.reservationCount > 0) ? (
+              <div className="mb-8 p-5 bg-red-500/5 border border-red-500/10 rounded-2xl">
+                <p className="text-text-main mb-3 text-center">
+                  <span className="font-black">{deleteModal.hubName}</span> contains:
+                </p>
+                <div className="grid grid-cols-2 gap-2 mb-4">
+                  <div className="text-center p-2 bg-surface rounded-xl border border-border">
+                    <span className="block text-xl font-black text-primary">{deleteModal.workspaceCount}</span>
+                    <span className="text-[10px] text-text-muted uppercase font-bold">Workspaces</span>
+                  </div>
+                  <div className="text-center p-2 bg-surface rounded-xl border border-border">
+                    <span className="block text-xl font-black text-accent">{deleteModal.reservationCount}</span>
+                    <span className="text-[10px] text-text-muted uppercase font-bold">Reservations</span>
+                  </div>
+                </div>
+                <p className="text-sm text-text-muted text-center leading-relaxed font-medium">
+                  Decommissioning will result in a <span className="text-red-500 font-bold uppercase">cascade deletion</span> of all associated node data.
+                </p>
+              </div>
+            ) : (
+              <p className="text-text-muted mb-8 text-center leading-relaxed font-medium">
+                Are you sure you want to decommission <span className="font-bold text-text-main">{deleteModal.hubName}</span>? This node will be removed from the network permanently.
+              </p>
+            )}
+
+            <div className="grid grid-cols-2 gap-4">
+              <button
+                onClick={handleDeleteCancel}
+                className="px-6 py-4 border border-border text-text-muted font-bold rounded-2xl hover:bg-surface-hover transition-all uppercase tracking-widest text-xs"
+              >
+                Abort
+              </button>
+              <button
+                onClick={handleDeleteConfirm}
+                className="px-6 py-4 bg-red-600 text-white font-bold rounded-2xl hover:bg-red-700 shadow-xl shadow-red-600/20 transition-all uppercase tracking-widest text-xs"
+              >
+                Confirm
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

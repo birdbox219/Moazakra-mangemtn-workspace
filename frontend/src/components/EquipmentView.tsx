@@ -6,6 +6,18 @@ export default function EquipmentView() {
   const [formData, setFormData] = useState<Equipment>({ name: '', type: '' });
   const [loading, setLoading] = useState(true);
 
+  const [deleteModal, setDeleteModal] = useState<{
+    isOpen: boolean;
+    equipmentId: number | null;
+    equipmentName: string;
+    usageCount: number;
+  }>({
+    isOpen: false,
+    equipmentId: null,
+    equipmentName: '',
+    usageCount: 0,
+  });
+
   const fetchEquipment = async () => {
     try {
       const data = await api.equipment.getAll();
@@ -28,11 +40,41 @@ export default function EquipmentView() {
     fetchEquipment();
   };
 
-  const handleDelete = async (id: number) => {
-    if (confirm('Are you sure?')) {
-      await api.equipment.delete(id);
-      fetchEquipment();
+  const checkUsage = async (id: number, name: string) => {
+    try {
+      const data = await api.equipment.getUsage(id);
+      setDeleteModal({
+        isOpen: true,
+        equipmentId: id,
+        equipmentName: name,
+        usageCount: data.count,
+      });
+    } catch (err) {
+      console.error('Error checking usage:', err);
+      setDeleteModal({
+        isOpen: true,
+        equipmentId: id,
+        equipmentName: name,
+        usageCount: 0,
+      });
     }
+  };
+
+  const handleDeleteConfirm = async () => {
+    if (deleteModal.equipmentId === null) return;
+
+    try {
+      await api.equipment.delete(deleteModal.equipmentId);
+      setDeleteModal({ isOpen: false, equipmentId: null, equipmentName: '', usageCount: 0 });
+      fetchEquipment();
+    } catch (err) {
+      console.error('Error deleting equipment:', err);
+      alert('Failed to purge asset');
+    }
+  };
+
+  const handleDeleteCancel = () => {
+    setDeleteModal({ isOpen: false, equipmentId: null, equipmentName: '', usageCount: 0 });
   };
 
   return (
@@ -118,7 +160,7 @@ export default function EquipmentView() {
                   </td>
                   <td className="px-8 py-6 text-right">
                     <button
-                      onClick={() => handleDelete(item.equipmentID!)}
+                      onClick={() => checkUsage(item.equipmentID!, item.name)}
                       className="text-red-500 hover:text-red-400 font-bold text-xs uppercase tracking-widest px-4 py-2 rounded-xl hover:bg-red-500/10 transition-all border border-transparent hover:border-red-500/20"
                     >
                       Purge
@@ -138,6 +180,55 @@ export default function EquipmentView() {
           </div>
         )}
       </div>
+
+      {/* Delete Confirmation Modal */}
+      {deleteModal.isOpen && (
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-md flex items-center justify-center z-[200] p-4">
+          <div className="glass rounded-3xl shadow-2xl p-10 max-w-md w-full animate-in fade-in zoom-in duration-500 border border-red-500/20">
+            <div className="w-16 h-16 bg-red-500/10 text-red-500 rounded-2xl flex items-center justify-center mb-6 mx-auto">
+              <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+              </svg>
+            </div>
+            
+            <h3 className="text-2xl font-display font-black text-text-main mb-4 text-center">
+              Purge Asset?
+            </h3>
+
+            {deleteModal.usageCount > 0 ? (
+              <div className="mb-8 p-5 bg-red-500/5 border border-red-500/10 rounded-2xl">
+                <p className="text-text-main mb-3 text-center">
+                  <span className="font-black">{deleteModal.equipmentName}</span> is currently assigned to{' '}
+                  <span className="text-red-500 font-black">{deleteModal.usageCount}</span>{' '}
+                  reservations.
+                </p>
+                <p className="text-sm text-text-muted text-center leading-relaxed font-medium">
+                  Proceeding will remove this asset from all associated reservations.
+                </p>
+              </div>
+            ) : (
+              <p className="text-text-muted mb-8 text-center leading-relaxed font-medium">
+                Are you sure you want to purge <span className="font-bold text-text-main">{deleteModal.equipmentName}</span> from the inventory?
+              </p>
+            )}
+
+            <div className="grid grid-cols-2 gap-4">
+              <button
+                onClick={handleDeleteCancel}
+                className="px-6 py-4 border border-border text-text-muted font-bold rounded-2xl hover:bg-surface-hover transition-all uppercase tracking-widest text-xs"
+              >
+                Abort
+              </button>
+              <button
+                onClick={handleDeleteConfirm}
+                className="px-6 py-4 bg-red-600 text-white font-bold rounded-2xl hover:bg-red-700 shadow-xl shadow-red-600/20 transition-all uppercase tracking-widest text-xs"
+              >
+                Confirm
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
