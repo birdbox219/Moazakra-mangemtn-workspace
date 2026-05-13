@@ -108,7 +108,14 @@ export const api = {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data)
     }),
-    delete: (id: number) => fetch(`${API_BASE_URL}/reservations/${id}`, { method: 'DELETE' })
+    delete: (id: number) => fetch(`${API_BASE_URL}/reservations/${id}`, { method: 'DELETE' }),
+    getEquipment: (id: number) => fetch(`${API_BASE_URL}/reservations/${id}/equipment`).then(res => res.json()),
+    addEquipment: (id: number, data: ReservationEquipment) => fetch(`${API_BASE_URL}/reservations/${id}/equipment`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    }),
+    deleteEquipment: (resId: number, eqId: number) => fetch(`${API_BASE_URL}/reservations/${resId}/equipment/${eqId}`, { method: 'DELETE' })
   },
   equipment: {
     getAll: () => fetch(`${API_BASE_URL}/equipment`).then(res => res.json()),
@@ -117,7 +124,8 @@ export const api = {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data)
     }),
-    delete: (id: number) => fetch(`${API_BASE_URL}/equipment/${id}`, { method: 'DELETE' })
+    delete: (id: number) => fetch(`${API_BASE_URL}/equipment/${id}`, { method: 'DELETE' }),
+    getUsage: (id: number) => fetch(`${API_BASE_URL}/equipment/${id}/usage`).then(res => res.json())
   },
  report: {
   getDashboard: (

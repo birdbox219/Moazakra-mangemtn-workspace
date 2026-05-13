@@ -7,6 +7,18 @@ export default function WorkspacesView() {
   const [formData, setFormData] = useState<Workspace>({ type: '', price: 0, capacity: 0, hubID: 0 });
   const [loading, setLoading] = useState(true);
 
+  const [deleteModal, setDeleteModal] = useState<{
+    isOpen: boolean;
+    workspaceId: number | null;
+    workspaceType: string;
+    reservationCount: number;
+  }>({
+    isOpen: false,
+    workspaceId: null,
+    workspaceType: '',
+    reservationCount: 0,
+  });
+
   const fetchData = async () => {
     try {
       const [wsData, hubData] = await Promise.all([
@@ -34,11 +46,52 @@ export default function WorkspacesView() {
     fetchData();
   };
 
-  const handleDelete = async (id: number) => {
-    if (confirm('Are you sure?')) {
-      await api.workspaces.delete(id);
-      fetchData();
+  const checkDependencies = async (id: number, type: string) => {
+    try {
+      const reservations = await api.reservations.getAll();
+      const wsReservations = reservations.filter((res: any) => res.workspaceID === id);
+      
+      setDeleteModal({
+        isOpen: true,
+        workspaceId: id,
+        workspaceType: type,
+        reservationCount: wsReservations.length,
+      });
+    } catch (err) {
+      console.error('Error checking dependencies:', err);
+      setDeleteModal({
+        isOpen: true,
+        workspaceId: id,
+        workspaceType: type,
+        reservationCount: 0,
+      });
     }
+  };
+
+  const handleDeleteConfirm = async () => {
+    if (deleteModal.workspaceId === null) return;
+
+    try {
+      if (deleteModal.reservationCount > 0) {
+        const reservations = await api.reservations.getAll();
+        const wsReservations = reservations.filter((res: any) => res.workspaceID === deleteModal.workspaceId);
+        
+        for (const res of wsReservations) {
+          await api.reservations.delete(res.reservationID);
+        }
+      }
+
+      await api.workspaces.delete(deleteModal.workspaceId);
+      setDeleteModal({ isOpen: false, workspaceId: null, workspaceType: '', reservationCount: 0 });
+      fetchData();
+    } catch (err) {
+      console.error('Error deleting workspace:', err);
+      alert('Failed to remove unit');
+    }
+  };
+
+  const handleDeleteCancel = () => {
+    setDeleteModal({ isOpen: false, workspaceId: null, workspaceType: '', reservationCount: 0 });
   };
 
   return (
@@ -150,7 +203,7 @@ export default function WorkspacesView() {
                   </td>
                   <td className="px-8 py-6 text-right">
                     <button
-                      onClick={() => handleDelete(ws.workspaceID!)}
+                      onClick={() => checkDependencies(ws.workspaceID!, ws.type)}
                       className="text-red-500 hover:text-red-400 font-bold text-xs uppercase tracking-widest px-4 py-2 rounded-xl hover:bg-red-500/10 transition-all border border-transparent hover:border-red-500/20"
                     >
                       Remove
@@ -170,6 +223,55 @@ export default function WorkspacesView() {
           </div>
         )}
       </div>
+
+      {/* Delete Confirmation Modal */}
+      {deleteModal.isOpen && (
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-md flex items-center justify-center z-[200] p-4">
+          <div className="glass rounded-3xl shadow-2xl p-10 max-w-md w-full animate-in fade-in zoom-in duration-500 border border-red-500/20">
+            <div className="w-16 h-16 bg-red-500/10 text-red-500 rounded-2xl flex items-center justify-center mb-6 mx-auto">
+              <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+              </svg>
+            </div>
+            
+            <h3 className="text-2xl font-display font-black text-text-main mb-4 text-center">
+              Remove Workspace?
+            </h3>
+
+            {deleteModal.reservationCount > 0 ? (
+              <div className="mb-8 p-5 bg-red-500/5 border border-red-500/10 rounded-2xl">
+                <p className="text-text-main mb-3 text-center">
+                  <span className="font-black">{deleteModal.workspaceType}</span> has{' '}
+                  <span className="text-red-500 font-black">{deleteModal.reservationCount}</span>{' '}
+                  active reservations.
+                </p>
+                <p className="text-sm text-text-muted text-center leading-relaxed font-medium">
+                  Proceeding will result in a <span className="text-red-500 font-bold uppercase">cascade deletion</span> of all associated reservation data.
+                </p>
+              </div>
+            ) : (
+              <p className="text-text-muted mb-8 text-center leading-relaxed font-medium">
+                Are you sure you want to remove <span className="font-bold text-text-main">{deleteModal.workspaceType}</span> from the inventory? This action is irreversible.
+              </p>
+            )}
+
+            <div className="grid grid-cols-2 gap-4">
+              <button
+                onClick={handleDeleteCancel}
+                className="px-6 py-4 border border-border text-text-muted font-bold rounded-2xl hover:bg-surface-hover transition-all uppercase tracking-widest text-xs"
+              >
+                Abort
+              </button>
+              <button
+                onClick={handleDeleteConfirm}
+                className="px-6 py-4 bg-red-600 text-white font-bold rounded-2xl hover:bg-red-700 shadow-xl shadow-red-600/20 transition-all uppercase tracking-widest text-xs"
+              >
+                Confirm
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

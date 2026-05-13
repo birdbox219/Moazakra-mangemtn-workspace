@@ -45,5 +45,12 @@ namespace WebApplication1.Controllers
             await _equipmentService.DeleteEquipmentAsync(id);
             return Ok();
         }
+
+        [HttpGet("{id}/usage")]
+        public async Task<IActionResult> GetUsage(int id)
+        {
+            var count = await _equipmentService.GetUsageCountAsync(id);
+            return Ok(new { count });
+        }
     }
 }

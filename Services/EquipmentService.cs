@@ -65,5 +65,15 @@ namespace WebApplication1.Services
             command.Parameters.AddWithValue("@id", id);
             await command.ExecuteNonQueryAsync();
         }
+
+        public async Task<int> GetUsageCountAsync(int id)
+        {
+            using var connection = _dbHelper.GetConnection();
+            await connection.OpenAsync();
+            using var command = new SqlCommand("SELECT COUNT(*) FROM ReservationEquipment WHERE EquipmentID = @id", connection);
+            command.Parameters.AddWithValue("@id", id);
+            var result = await command.ExecuteScalarAsync();
+            return result == System.DBNull.Value ? 0 : Convert.ToInt32(result);
+        }
     }
 }

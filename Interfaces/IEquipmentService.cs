@@ -10,5 +10,6 @@ namespace WebApplication1.Interfaces
         Task AddEquipmentAsync(Equipment eq);
         Task UpdateEquipmentAsync(Equipment eq);
         Task DeleteEquipmentAsync(int id);
+        Task<int> GetUsageCountAsync(int id);
     }
 }
