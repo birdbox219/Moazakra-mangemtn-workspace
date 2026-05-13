@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
-type Theme = 'default' | 'automata' | 'neon' | 'cherry' | 'astral';
+type Theme = 'default' | 'automata' | 'neon' | 'cherry' | 'astral' | 'synthwave' | 'obsidian' | 'nordic' | 'terminal' | 'abyssal' | 'volcanic';
 
 interface ThemeContextType {
   theme: Theme;

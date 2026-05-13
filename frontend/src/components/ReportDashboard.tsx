@@ -326,7 +326,7 @@ export default function ReportDashboard() {
                 dataKey="label" 
                 axisLine={false} 
                 tickLine={false} 
-                tick={{fill: 'var(--text-muted)', fontSize: 10, fontWeight: 800, textTransform: 'uppercase'}}
+                tick={{fill: 'var(--text-muted)', fontSize: 10, fontWeight: 800}}
                 dy={15}
               />
               <YAxis 
