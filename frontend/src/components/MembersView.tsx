@@ -181,135 +181,146 @@ export default function MembersView() {
   };
 
   return (
-    <div className="space-y-4 md:space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+    <div className="space-y-6 md:space-y-10 animate-in fade-in slide-in-from-bottom-8 duration-700">
       {/* Form Card */}
-      <div className="bg-white p-4 md:p-8 rounded-2xl shadow-sm border border-gray-100">
-        <h2 className="text-lg font-bold text-gray-800 mb-6">Add New Member</h2>
+      <div className="glass p-6 md:p-10 rounded-2xl shadow-xl shadow-black/5 relative overflow-hidden group">
+        <div className="absolute top-0 left-0 w-1 bg-primary h-full opacity-50 group-hover:opacity-100 transition-opacity" />
+        <h2 className="text-xl font-display font-bold text-text-main mb-8 flex items-center gap-3">
+          <span className="w-8 h-8 rounded-lg bg-primary/10 text-primary flex items-center justify-center text-sm">＋</span>
+          Add New Member
+        </h2>
 
         {/* Display submit error if any */}
         {errors.submit && (
-          <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded-lg text-sm">
+          <div className="mb-6 p-4 bg-red-500/10 border border-red-500/20 text-red-500 rounded-xl text-sm font-medium animate-shake">
             {errors.submit}
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {/* First Name Field */}
-          <div>
+          <div className="space-y-2">
+            <label className="text-xs font-bold text-text-muted uppercase tracking-widest ml-1">First Name</label>
             <input
               type="text"
               name="fName"
-              placeholder="First Name"
-              className={`w-full p-3 border rounded-xl focus:ring-2 outline-none transition-all ${
+              placeholder="e.g. John"
+              className={`w-full p-4 bg-surface-hover border rounded-xl focus:ring-2 outline-none transition-all font-medium text-text-main placeholder:text-text-muted/30 ${
                 errors.fName
-                  ? 'border-red-500 bg-red-50 focus:ring-red-500'
-                  : 'border-gray-200 focus:ring-indigo-500'
+                  ? 'border-red-500/50 bg-red-500/5 focus:ring-red-500'
+                  : 'border-border focus:ring-primary'
               }`}
               value={formData.fName}
               onChange={handleInputChange}
             />
             {errors.fName && (
-              <p className="text-red-500 text-sm mt-1 font-medium">{errors.fName}</p>
+              <p className="text-red-500 text-xs mt-1 font-bold ml-1">{errors.fName}</p>
             )}
           </div>
 
           {/* Last Name Field */}
-          <div>
+          <div className="space-y-2">
+            <label className="text-xs font-bold text-text-muted uppercase tracking-widest ml-1">Last Name</label>
             <input
               type="text"
               name="lName"
-              placeholder="Last Name"
-              className={`w-full p-3 border rounded-xl focus:ring-2 outline-none transition-all ${
+              placeholder="e.g. Doe"
+              className={`w-full p-4 bg-surface-hover border rounded-xl focus:ring-2 outline-none transition-all font-medium text-text-main placeholder:text-text-muted/30 ${
                 errors.lName
-                  ? 'border-red-500 bg-red-50 focus:ring-red-500'
-                  : 'border-gray-200 focus:ring-indigo-500'
+                  ? 'border-red-500/50 bg-red-500/5 focus:ring-red-500'
+                  : 'border-border focus:ring-primary'
               }`}
               value={formData.lName}
               onChange={handleInputChange}
             />
             {errors.lName && (
-              <p className="text-red-500 text-sm mt-1 font-medium">{errors.lName}</p>
+              <p className="text-red-500 text-xs mt-1 font-bold ml-1">{errors.lName}</p>
             )}
           </div>
 
           {/* Nick Name Field */}
-          <div>
+          <div className="space-y-2">
+            <label className="text-xs font-bold text-text-muted uppercase tracking-widest ml-1">Nick Name</label>
             <input
               type="text"
               name="nickName"
-              placeholder="Nick Name (Optional)"
-              className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none transition-all"
+              placeholder="Cool Alias"
+              className="w-full p-4 bg-surface-hover border border-border rounded-xl focus:ring-2 focus:ring-primary outline-none transition-all font-medium text-text-main placeholder:text-text-muted/30"
               value={formData.nickName}
               onChange={handleInputChange}
             />
           </div>
 
           {/* Email Field */}
-          <div>
+          <div className="space-y-2">
+            <label className="text-xs font-bold text-text-muted uppercase tracking-widest ml-1">Email Address</label>
             <input
               type="email"
               name="email"
-              placeholder="Email"
-              className={`w-full p-3 border rounded-xl focus:ring-2 outline-none transition-all ${
+              placeholder="john@example.com"
+              className={`w-full p-4 bg-surface-hover border rounded-xl focus:ring-2 outline-none transition-all font-medium text-text-main placeholder:text-text-muted/30 ${
                 errors.email
-                  ? 'border-red-500 bg-red-50 focus:ring-red-500'
-                  : 'border-gray-200 focus:ring-indigo-500'
+                  ? 'border-red-500/50 bg-red-500/5 focus:ring-red-500'
+                  : 'border-border focus:ring-primary'
               }`}
               value={formData.email}
               onChange={handleInputChange}
             />
             {errors.email && (
-              <p className="text-red-500 text-sm mt-1 font-medium">{errors.email}</p>
+              <p className="text-red-500 text-xs mt-1 font-bold ml-1">{errors.email}</p>
             )}
           </div>
 
           {/* Digital ID Field */}
-          <div>
+          <div className="space-y-2">
+            <label className="text-xs font-bold text-text-muted uppercase tracking-widest ml-1">Digital ID</label>
             <input
               type="text"
               name="digitalID"
-              placeholder="Digital ID (Optional)"
-              className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none transition-all"
+              placeholder="ID-12345"
+              className="w-full p-4 bg-surface-hover border border-border rounded-xl focus:ring-2 focus:ring-primary outline-none transition-all font-medium text-text-main placeholder:text-text-muted/30 font-mono"
               value={formData.digitalID}
               onChange={handleInputChange}
             />
           </div>
 
           {/* Company Field */}
-          <div>
+          <div className="space-y-2">
+            <label className="text-xs font-bold text-text-muted uppercase tracking-widest ml-1">Company</label>
             <input
               type="text"
               name="company"
-              placeholder="Company"
-              className={`w-full p-3 border rounded-xl focus:ring-2 outline-none transition-all ${
+              placeholder="Tech Corp"
+              className={`w-full p-4 bg-surface-hover border rounded-xl focus:ring-2 outline-none transition-all font-medium text-text-main placeholder:text-text-muted/30 ${
                 errors.company
-                  ? 'border-red-500 bg-red-50 focus:ring-red-500'
-                  : 'border-gray-200 focus:ring-indigo-500'
+                  ? 'border-red-500/50 bg-red-500/5 focus:ring-red-500'
+                  : 'border-border focus:ring-primary'
               }`}
               value={formData.company}
               onChange={handleInputChange}
             />
             {errors.company && (
-              <p className="text-red-500 text-sm mt-1 font-medium">{errors.company}</p>
+              <p className="text-red-500 text-xs mt-1 font-bold ml-1">{errors.company}</p>
             )}
           </div>
 
           {/* Phone Numbers Field */}
-          <div>
+          <div className="md:col-span-2 lg:col-span-3 space-y-2">
+            <label className="text-xs font-bold text-text-muted uppercase tracking-widest ml-1">Phone Numbers (comma separated)</label>
             <input
               type="text"
-              placeholder="Phone Numbers (comma separated)"
-              className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none transition-all"
+              placeholder="0123456789, 0987654321"
+              className="w-full p-4 bg-surface-hover border border-border rounded-xl focus:ring-2 focus:ring-primary outline-none transition-all font-medium text-text-main placeholder:text-text-muted/30"
               value={phoneInput}
               onChange={(e) => setPhoneInput(e.target.value)}
             />
           </div>
 
           {/* Submit Button */}
-          <div className="md:col-span-2 lg:col-span-3 flex justify-end mt-2">
+          <div className="md:col-span-2 lg:col-span-3 flex justify-end mt-4">
             <button
               type="submit"
-              className="bg-indigo-600 text-white px-8 py-3 rounded-xl font-semibold hover:bg-indigo-700 transition-colors shadow-lg shadow-indigo-200 w-full md:w-auto"
+              className="bg-primary text-surface px-10 py-4 rounded-2xl font-display font-bold hover:shadow-2xl hover:shadow-primary/40 transition-all active:scale-95 w-full md:w-auto glitch-hover"
             >
               Add Member
             </button>
@@ -318,67 +329,69 @@ export default function MembersView() {
       </div>
 
       {/* List Card */}
-      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-        <div className="p-4 md:p-6 border-b border-gray-50 bg-gray-50/50">
-          <h2 className="font-bold text-gray-700">Member List</h2>
+      <div className="glass rounded-2xl shadow-xl shadow-black/5 overflow-hidden border border-border">
+        <div className="p-6 md:p-8 border-b border-border bg-surface-hover/50 flex justify-between items-center">
+          <h2 className="font-display font-bold text-text-main text-lg">Member Registry</h2>
+          <span className="text-xs font-bold text-primary bg-primary/10 px-3 py-1 rounded-full uppercase tracking-tighter">
+            {members.length} Total
+          </span>
         </div>
         {loading ? (
-          <div className="p-12 text-center text-gray-500">Loading members...</div>
+          <div className="p-20 text-center text-text-muted font-medium animate-pulse">Scanning database...</div>
         ) : (
           <div className="overflow-x-auto w-full">
             <table className="w-full text-left min-w-[1000px]">
-            <thead className="bg-gray-50 text-gray-500 text-sm uppercase tracking-wider">
+            <thead className="bg-surface-hover text-text-muted text-xs uppercase tracking-[0.2em]">
               <tr>
-                <th className="px-8 py-4 font-semibold">Name</th>
-                <th className="px-8 py-4 font-semibold">Nickname</th>
-                <th className="px-8 py-4 font-semibold">Digital ID</th>
-                <th className="px-8 py-4 font-semibold">Phone</th>
-                <th className="px-8 py-4 font-semibold">Email</th>
-                <th className="px-8 py-4 font-semibold">Company</th>
-                <th className="px-8 py-4 font-semibold text-right">Actions</th>
+                <th className="px-8 py-5 font-black">Full Name</th>
+                <th className="px-8 py-5 font-black">Nickname</th>
+                <th className="px-8 py-5 font-black">Digital ID</th>
+                <th className="px-8 py-5 font-black">Contact</th>
+                <th className="px-8 py-5 font-black">Company</th>
+                <th className="px-8 py-5 font-black text-right">Operations</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-100">
+            <tbody className="divide-y divide-border">
               {members.map((member) => (
-                <tr key={member.memberID} className="hover:bg-gray-50/80 transition-colors">
-                  <td className="px-8 py-4 font-medium text-gray-900">{member.fullName || `${member.fName} ${member.lName}`}</td>
-                  <td className="px-8 py-4 text-gray-500">{member.nickName || <span className="text-gray-300 italic">-</span>}</td>
-                  <td className="px-8 py-4">
+                <tr key={member.memberID} className="hover:bg-primary/5 transition-colors group">
+                  <td className="px-8 py-6 font-bold text-text-main">{member.fullName || `${member.fName} ${member.lName}`}</td>
+                  <td className="px-8 py-6 text-text-muted font-medium">{member.nickName || <span className="opacity-20 italic">None</span>}</td>
+                  <td className="px-8 py-6">
                     {member.digitalID ? (
-                      <span className="font-mono text-xs text-indigo-700 bg-indigo-50 px-2 py-1 rounded-md border border-indigo-100">
+                      <span className="font-mono text-[10px] text-primary bg-primary/10 px-2.5 py-1 rounded-lg border border-primary/20 font-bold tracking-widest">
                         {member.digitalID}
                       </span>
                     ) : (
-                      <span className="text-gray-300 italic">-</span>
+                      <span className="opacity-20 italic">-</span>
                     )}
                   </td>
-                  <td className="px-8 py-4 text-gray-600">
-                    {member.phoneNumbers && member.phoneNumbers.length > 0 ? (
-                      <div className="flex flex-col gap-1">
-                        {member.phoneNumbers.map((p, idx) => (
-                          <span key={idx} className="text-sm bg-gray-100 px-2 py-1 rounded text-gray-700">{p}</span>
-                        ))}
-                      </div>
-                    ) : (
-                      <span className="text-gray-300 italic">-</span>
-                    )}
+                  <td className="px-8 py-6 text-text-main">
+                    <div className="flex flex-col gap-1.5">
+                      <span className="text-sm font-semibold">{member.email}</span>
+                      {member.phoneNumbers && member.phoneNumbers.length > 0 && (
+                        <div className="flex flex-wrap gap-1">
+                          {member.phoneNumbers.map((p, idx) => (
+                            <span key={idx} className="text-[10px] bg-border/50 px-1.5 py-0.5 rounded font-mono text-text-muted">{p}</span>
+                          ))}
+                        </div>
+                      )}
+                    </div>
                   </td>
-                  <td className="px-8 py-4 text-gray-600">{member.email}</td>
-                  <td className="px-8 py-4 text-gray-600">{member.company}</td>
-                  <td className="px-8 py-4 text-right">
+                  <td className="px-8 py-6 text-text-muted font-medium">{member.company}</td>
+                  <td className="px-8 py-6 text-right">
                     <button
                       onClick={() => checkReservations(member.memberID!, member.fullName || `${member.fName} ${member.lName}`)}
-                      className="text-red-500 hover:text-red-700 font-medium px-3 py-1 rounded-lg hover:bg-red-50 transition-colors"
+                      className="text-red-500 hover:text-red-400 font-bold text-xs uppercase tracking-widest px-4 py-2 rounded-xl hover:bg-red-500/10 transition-all border border-transparent hover:border-red-500/20"
                     >
-                      Delete
+                      Remove
                     </button>
                   </td>
                 </tr>
               ))}
               {members.length === 0 && (
                 <tr>
-                  <td colSpan={7} className="px-8 py-12 text-center text-gray-400 italic">
-                    No members found. Add your first member above!
+                  <td colSpan={7} className="px-8 py-20 text-center text-text-muted italic opacity-50">
+                    No registry data found. Initialize system by adding a member.
                   </td>
                 </tr>
               )}
@@ -390,46 +403,47 @@ export default function MembersView() {
 
       {/* Delete Confirmation Modal */}
       {deleteModal.isOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full mx-4 animate-in fade-in zoom-in duration-300">
-            <h3 className="text-xl font-bold text-gray-900 mb-4">
-              Confirm Delete
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-md flex items-center justify-center z-[200] p-4">
+          <div className="glass rounded-3xl shadow-2xl p-10 max-w-md w-full animate-in fade-in zoom-in duration-500 border border-red-500/20">
+            <div className="w-16 h-16 bg-red-500/10 text-red-500 rounded-2xl flex items-center justify-center mb-6 mx-auto">
+              <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+              </svg>
+            </div>
+            
+            <h3 className="text-2xl font-display font-black text-text-main mb-4 text-center">
+              Terminate Entry?
             </h3>
 
             {deleteModal.hasReservations ? (
-              <>
-                <div className="mb-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
-                  <p className="text-gray-700 mb-2">
-                    <span className="font-semibold">{deleteModal.memberName}</span> has{' '}
-                    <span className="font-bold text-yellow-600">{deleteModal.reservationCount}</span>{' '}
-                    active reservation{deleteModal.reservationCount !== 1 ? 's' : ''}.
-                  </p>
-                  <p className="text-sm text-gray-600">
-                    If you delete this member, all associated reservations will also be deleted.
-                  </p>
-                </div>
-                <p className="text-gray-700 font-medium mb-6">
-                  Are you sure you want to delete this member and all their reservations?
+              <div className="mb-8 p-5 bg-red-500/5 border border-red-500/10 rounded-2xl">
+                <p className="text-text-main mb-3 text-center">
+                  <span className="font-black">{deleteModal.memberName}</span> has{' '}
+                  <span className="text-red-500 font-black">{deleteModal.reservationCount}</span>{' '}
+                  active reservations.
                 </p>
-              </>
+                <p className="text-sm text-text-muted text-center leading-relaxed">
+                  Proceeding will result in a cascade deletion of all associated reservation data.
+                </p>
+              </div>
             ) : (
-              <p className="text-gray-700 mb-6">
-                Are you sure you want to delete <span className="font-semibold">{deleteModal.memberName}</span>?
+              <p className="text-text-muted mb-8 text-center leading-relaxed">
+                Are you sure you want to remove <span className="font-bold text-text-main">{deleteModal.memberName}</span> from the registry? This action is irreversible.
               </p>
             )}
 
-            <div className="flex gap-4 justify-end">
+            <div className="grid grid-cols-2 gap-4">
               <button
                 onClick={handleDeleteCancel}
-                className="px-6 py-2 border border-gray-300 text-gray-700 font-semibold rounded-lg hover:bg-gray-50 transition-colors"
+                className="px-6 py-4 border border-border text-text-muted font-bold rounded-2xl hover:bg-surface-hover transition-all uppercase tracking-widest text-xs"
               >
-                Cancel
+                Abort
               </button>
               <button
                 onClick={handleDeleteConfirm}
-                className="px-6 py-2 bg-red-500 text-white font-semibold rounded-lg hover:bg-red-600 transition-colors"
+                className="px-6 py-4 bg-red-600 text-white font-bold rounded-2xl hover:bg-red-700 shadow-xl shadow-red-600/20 transition-all uppercase tracking-widest text-xs"
               >
-                Delete
+                Confirm
               </button>
             </div>
           </div>
