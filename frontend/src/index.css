@@ -93,6 +93,94 @@
   --radius-xlarge: 0.75rem;
 }
 
+[data-theme='synthwave'] {
+  --primary: #ff00ff;
+  --surface: #1a0b2e;
+  --surface-hover: #2d134d;
+  --text-main: #ffffff;
+  --text-muted: #b392f0;
+  --accent: #ff7edb;
+  --border-color: #3d1d6d;
+  --font-display-family: 'Space Grotesk', sans-serif;
+  --font-body-family: 'Inter', sans-serif;
+  --radius-large: 1rem;
+  --radius-xlarge: 1.5rem;
+  --glass-blur: 15px;
+  --glass-opacity: 0.7;
+}
+
+[data-theme='obsidian'] {
+  --primary: #00ff41;
+  --surface: #000000;
+  --surface-hover: #0a0a0a;
+  --text-main: #ffffff;
+  --text-muted: #444444;
+  --accent: #111111;
+  --border-color: #1a1a1a;
+  --font-display-family: 'Space Grotesk', sans-serif;
+  --font-body-family: 'Inter', sans-serif;
+  --radius-large: 4px;
+  --radius-xlarge: 8px;
+}
+
+[data-theme='nordic'] {
+  --primary: #88c0d0;
+  --surface: #eceff4;
+  --surface-hover: #e5e9f0;
+  --text-main: #2e3440;
+  --text-muted: #4c566a;
+  --accent: #81a1c1;
+  --border-color: #d8dee9;
+  --font-display-family: 'Inter', sans-serif;
+  --font-body-family: 'Inter', sans-serif;
+  --radius-large: 0.75rem;
+  --radius-xlarge: 1rem;
+}
+
+[data-theme='terminal'] {
+  --primary: #33ff33;
+  --surface: #0a0c0a;
+  --surface-hover: #121612;
+  --text-main: #33ff33;
+  --text-muted: #1b8a1b;
+  --accent: #ffb000;
+  --border-color: #1b8a1b;
+  --font-display-family: 'Space Grotesk', monospace;
+  --font-body-family: 'Space Grotesk', monospace;
+  --radius-large: 0px;
+  --radius-xlarge: 0px;
+}
+
+[data-theme='abyssal'] {
+  --primary: #00d2ff;
+  --surface: #000c14;
+  --surface-hover: #001625;
+  --text-main: #e0f2f1;
+  --text-muted: #4db6ac;
+  --accent: #3aedff;
+  --border-color: #00253d;
+  --font-display-family: 'Lexend', sans-serif;
+  --font-body-family: 'Lexend', sans-serif;
+  --radius-large: 1.5rem;
+  --radius-xlarge: 2rem;
+  --glass-blur: 20px;
+  --glass-opacity: 0.6;
+}
+
+[data-theme='volcanic'] {
+  --primary: #ff4d00;
+  --surface: #1a1a1a;
+  --surface-hover: #262626;
+  --text-main: #ffffff;
+  --text-muted: #8c8c8c;
+  --accent: #ffcc00;
+  --border-color: #333333;
+  --font-display-family: 'Space Grotesk', sans-serif;
+  --font-body-family: 'Inter', sans-serif;
+  --radius-large: 0px;
+  --radius-xlarge: 4px;
+}
+
 body {
   background-color: var(--surface);
   color: var(--text-main);
@@ -176,4 +264,13 @@ body {
 
 button, input, select, a, .interactive, .no-drag {
   -webkit-app-region: no-drag;
+}
+
+/* Scrollbar Hide Utility */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
