@@ -142,7 +142,7 @@ export default function ReportDashboard() {
 
         <button
           onClick={loadReport}
-          className="bg-indigo-600 text-white px-4 py-2 rounded"
+          className="bg-indigo-600 text-white px-4 py-2 rounded w-full sm:w-auto"
         >
           Refresh
         </button>
@@ -165,7 +165,7 @@ export default function ReportDashboard() {
             onChange={(e) =>
               setStartDate(e.target.value)
             }
-            className="border rounded px-3 py-2"
+            className="border rounded px-3 py-2 w-full"
           />
 
         </div>
@@ -182,14 +182,14 @@ export default function ReportDashboard() {
             onChange={(e) =>
               setEndDate(e.target.value)
             }
-            className="border rounded px-3 py-2"
+            className="border rounded px-3 py-2 w-full"
           />
 
         </div>
 
         <button
           onClick={loadReport}
-          className="bg-green-600 text-white px-4 py-2 rounded"
+          className="bg-green-600 text-white px-4 py-2 rounded w-full sm:w-auto"
         >
           Apply Filter
         </button>
@@ -392,7 +392,7 @@ export default function ReportDashboard() {
 
         <ResponsiveContainer
           width="100%"
-          height={300}
+          height={250}
         >
 
           <LineChart
@@ -430,7 +430,7 @@ export default function ReportDashboard() {
 
         <ResponsiveContainer
           width="100%"
-          height={300}
+          height={250}
         >
 
         <BarChart
@@ -493,7 +493,7 @@ export default function ReportDashboard() {
 
         <ResponsiveContainer
           width="100%"
-          height={350}
+          height={300}
         >
 
           <PieChart>

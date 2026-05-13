@@ -53,9 +53,9 @@ export default function HubsView() {
   };
 
   return (
-    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+    <div className="space-y-4 md:space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
       {/* Form Card */}
-      <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
+      <div className="bg-white p-4 md:p-8 rounded-2xl shadow-sm border border-gray-100">
         <h2 className="text-lg font-bold text-gray-800 mb-6">Add New Hub</h2>
         <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <div>
@@ -119,10 +119,10 @@ export default function HubsView() {
               onChange={handleInputChange}
             />
           </div>
-          <div className="lg:col-span-3 flex justify-end mt-2">
+          <div className="md:col-span-2 lg:col-span-3 flex justify-end mt-2">
             <button
               type="submit"
-              className="bg-indigo-600 text-white px-8 py-3 rounded-xl font-semibold hover:bg-indigo-700 transition-colors shadow-lg shadow-indigo-200"
+              className="bg-indigo-600 text-white px-8 py-3 rounded-xl font-semibold hover:bg-indigo-700 transition-colors shadow-lg shadow-indigo-200 w-full md:w-auto"
             >
               Add Hub
             </button>
@@ -132,13 +132,14 @@ export default function HubsView() {
 
       {/* List Card */}
       <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-        <div className="p-6 border-b border-gray-50 bg-gray-50/50">
+        <div className="p-4 md:p-6 border-b border-gray-50 bg-gray-50/50">
           <h2 className="font-bold text-gray-700">Hub List</h2>
         </div>
         {loading ? (
           <div className="p-12 text-center text-gray-500">Loading hubs...</div>
         ) : (
-          <table className="w-full text-left">
+          <div className="overflow-x-auto w-full">
+            <table className="w-full text-left min-w-[600px]">
             <thead className="bg-gray-50 text-gray-500 text-sm uppercase tracking-wider">
               <tr>
                 <th className="px-8 py-4 font-semibold">Name</th>
@@ -172,6 +173,7 @@ export default function HubsView() {
               )}
             </tbody>
           </table>
+          </div>
         )}
       </div>
     </div>

@@ -57,9 +57,9 @@ export default function ReservationsView() {
   };
 
   return (
-    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+    <div className="space-y-4 md:space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
       {/* Form Card */}
-      <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
+      <div className="bg-white p-4 md:p-8 rounded-2xl shadow-sm border border-gray-100">
         <h2 className="text-lg font-bold text-gray-800 mb-6">Create New Reservation</h2>
         <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <div className="space-y-2">
@@ -129,13 +129,14 @@ export default function ReservationsView() {
 
       {/* List Card */}
       <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-        <div className="p-6 border-b border-gray-50 bg-gray-50/50">
+        <div className="p-4 md:p-6 border-b border-gray-50 bg-gray-50/50">
           <h2 className="font-bold text-gray-700">Recent Reservations</h2>
         </div>
         {loading ? (
           <div className="p-12 text-center text-gray-500">Loading reservations...</div>
         ) : (
-          <table className="w-full text-left">
+          <div className="overflow-x-auto w-full">
+            <table className="w-full text-left min-w-[800px]">
             <thead className="bg-gray-50 text-gray-500 text-sm uppercase tracking-wider">
               <tr>
                 <th className="px-8 py-4 font-semibold">Member</th>
@@ -183,6 +184,7 @@ export default function ReservationsView() {
               )}
             </tbody>
           </table>
+          </div>
         )}
       </div>
     </div>
