@@ -27,4 +27,4 @@ Thumbs.db
 *.jsonl
 
 # Agents
-.agents/
+# .agents/

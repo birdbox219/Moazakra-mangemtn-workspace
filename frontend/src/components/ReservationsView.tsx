@@ -57,15 +57,19 @@ export default function ReservationsView() {
   };
 
   return (
-    <div className="space-y-4 md:space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+    <div className="space-y-6 md:space-y-10 animate-in fade-in slide-in-from-bottom-8 duration-700">
       {/* Form Card */}
-      <div className="bg-white p-4 md:p-8 rounded-2xl shadow-sm border border-gray-100">
-        <h2 className="text-lg font-bold text-gray-800 mb-6">Create New Reservation</h2>
-        <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="glass p-6 md:p-10 rounded-2xl shadow-xl shadow-black/5 relative overflow-hidden group">
+        <div className="absolute top-0 left-0 w-1 bg-primary h-full opacity-50 group-hover:opacity-100 transition-opacity" />
+        <h2 className="text-xl font-display font-bold text-text-main mb-8 flex items-center gap-3">
+          <span className="w-8 h-8 rounded-lg bg-primary/10 text-primary flex items-center justify-center text-sm">＋</span>
+          Create New Reservation
+        </h2>
+        <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-gray-500 ml-1">Member</label>
+            <label className="text-xs font-bold text-text-muted uppercase tracking-widest ml-1">Member</label>
             <select
-              className="w-full p-3 border border-gray-200 rounded-xl outline-none bg-white focus:ring-2 focus:ring-indigo-500"
+              className="w-full p-4 bg-surface-hover border border-border rounded-xl outline-none focus:ring-2 focus:ring-primary transition-all font-medium text-text-main appearance-none"
               value={formData.memberID}
               onChange={(e) => setFormData({ ...formData, memberID: parseInt(e.target.value) })}
               required
@@ -74,9 +78,9 @@ export default function ReservationsView() {
             </select>
           </div>
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-gray-500 ml-1">Workspace</label>
+            <label className="text-xs font-bold text-text-muted uppercase tracking-widest ml-1">Workspace</label>
             <select
-              className="w-full p-3 border border-gray-200 rounded-xl outline-none bg-white focus:ring-2 focus:ring-indigo-500"
+              className="w-full p-4 bg-surface-hover border border-border rounded-xl outline-none focus:ring-2 focus:ring-primary transition-all font-medium text-text-main appearance-none"
               value={formData.workspaceID}
               onChange={(e) => setFormData({ ...formData, workspaceID: parseInt(e.target.value) })}
               required
@@ -85,9 +89,9 @@ export default function ReservationsView() {
             </select>
           </div>
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-gray-500 ml-1">Status</label>
+            <label className="text-xs font-bold text-text-muted uppercase tracking-widest ml-1">Status</label>
             <select
-              className="w-full p-3 border border-gray-200 rounded-xl outline-none bg-white focus:ring-2 focus:ring-indigo-500"
+              className="w-full p-4 bg-surface-hover border border-border rounded-xl outline-none focus:ring-2 focus:ring-primary transition-all font-medium text-text-main appearance-none"
               value={formData.status}
               onChange={(e) => setFormData({ ...formData, status: e.target.value })}
             >
@@ -97,20 +101,20 @@ export default function ReservationsView() {
             </select>
           </div>
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-gray-500 ml-1">Start Date</label>
+            <label className="text-xs font-bold text-text-muted uppercase tracking-widest ml-1">Start Date</label>
             <input
               type="date"
-              className="w-full p-3 border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full p-4 bg-surface-hover border border-border rounded-xl outline-none focus:ring-2 focus:ring-primary transition-all font-medium text-text-main"
               value={formData.startDate}
               onChange={(e) => setFormData({ ...formData, startDate: e.target.value })}
               required
             />
           </div>
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-gray-500 ml-1">End Date</label>
+            <label className="text-xs font-bold text-text-muted uppercase tracking-widest ml-1">End Date</label>
             <input
               type="date"
-              className="w-full p-3 border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full p-4 bg-surface-hover border border-border rounded-xl outline-none focus:ring-2 focus:ring-primary transition-all font-medium text-text-main"
               value={formData.endDate}
               onChange={(e) => setFormData({ ...formData, endDate: e.target.value })}
               required
@@ -119,66 +123,80 @@ export default function ReservationsView() {
           <div className="flex items-end">
             <button
               type="submit"
-              className="w-full bg-indigo-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-indigo-700 transition-colors shadow-lg shadow-indigo-200"
+              className="w-full bg-primary text-surface px-10 py-4 rounded-2xl font-display font-bold hover:shadow-2xl hover:shadow-primary/40 transition-all active:scale-95 glitch-hover"
             >
-              Reserve
+              Book Reservation
             </button>
           </div>
         </form>
       </div>
 
       {/* List Card */}
-      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-        <div className="p-4 md:p-6 border-b border-gray-50 bg-gray-50/50">
-          <h2 className="font-bold text-gray-700">Recent Reservations</h2>
+      <div className="glass rounded-2xl shadow-xl shadow-black/5 overflow-hidden border border-border">
+        <div className="p-6 md:p-8 border-b border-border bg-surface-hover/50 flex justify-between items-center">
+          <h2 className="font-display font-bold text-text-main text-lg">Active Bookings</h2>
+          <span className="text-xs font-bold text-primary bg-primary/10 px-3 py-1 rounded-full uppercase tracking-tighter">
+            {reservations.length} Entries
+          </span>
         </div>
         {loading ? (
-          <div className="p-12 text-center text-gray-500">Loading reservations...</div>
+          <div className="p-20 text-center text-text-muted font-medium animate-pulse">Retrieving booking manifest...</div>
         ) : (
           <div className="overflow-x-auto w-full">
             <table className="w-full text-left min-w-[800px]">
-            <thead className="bg-gray-50 text-gray-500 text-sm uppercase tracking-wider">
+            <thead className="bg-surface-hover text-text-muted text-xs uppercase tracking-[0.2em]">
               <tr>
-                <th className="px-8 py-4 font-semibold">Member</th>
-                <th className="px-8 py-4 font-semibold">Workspace</th>
-                <th className="px-8 py-4 font-semibold">Duration</th>
-                <th className="px-8 py-4 font-semibold">Status</th>
-                <th className="px-8 py-4 font-semibold text-right">Actions</th>
+                <th className="px-8 py-5 font-black">Member Entity</th>
+                <th className="px-8 py-5 font-black">Resource Allocation</th>
+                <th className="px-8 py-5 font-black">Time Window</th>
+                <th className="px-8 py-5 font-black">System Status</th>
+                <th className="px-8 py-5 font-black text-right">Operations</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-100">
+            <tbody className="divide-y divide-border">
               {reservations.map((res) => (
-                <tr key={res.reservationID} className="hover:bg-gray-50/80 transition-colors">
-                  <td className="px-8 py-4">
-                    <div className="font-medium text-gray-900">{res.memberName}</div>
-                    <div className="text-xs text-gray-400">ID: {res.memberID}</div>
+                <tr key={res.reservationID} className="hover:bg-primary/5 transition-colors group">
+                  <td className="px-8 py-6">
+                    <div className="flex flex-col">
+                      <span className="font-bold text-text-main text-base">{res.memberName}</span>
+                      <span className="text-[10px] text-text-muted font-bold uppercase tracking-widest mt-0.5">UID: {res.memberID}</span>
+                    </div>
                   </td>
-                  <td className="px-8 py-4 text-gray-600">{res.workspaceType}</td>
-                  <td className="px-8 py-4 text-gray-600 text-sm">
-                    {new Date(res.startDate).toLocaleDateString()} - {new Date(res.endDate).toLocaleDateString()}
+                  <td className="px-8 py-6">
+                    <span className="font-bold text-text-main flex items-center gap-2">
+                      <div className="w-1.5 h-1.5 rounded-full bg-accent" />
+                      {res.workspaceType}
+                    </span>
                   </td>
-                  <td className="px-8 py-4">
-                    <span className={`px-3 py-1 rounded-full text-xs font-bold ${
-                      res.status === 'Confirmed' ? 'bg-green-100 text-green-700' :
-                      res.status === 'Cancelled' ? 'bg-red-100 text-red-700' : 'bg-yellow-100 text-yellow-700'
+                  <td className="px-8 py-6 text-text-muted font-medium text-sm">
+                    <div className="flex items-center gap-2">
+                      <span className="bg-border/50 px-2 py-0.5 rounded font-mono text-[11px]">{new Date(res.startDate).toLocaleDateString()}</span>
+                      <span className="text-[10px] opacity-30">▶</span>
+                      <span className="bg-border/50 px-2 py-0.5 rounded font-mono text-[11px]">{new Date(res.endDate).toLocaleDateString()}</span>
+                    </div>
+                  </td>
+                  <td className="px-8 py-6">
+                    <span className={`px-4 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-widest border ${
+                      res.status === 'Confirmed' ? 'bg-green-500/10 text-green-500 border-green-500/20' :
+                      res.status === 'Cancelled' ? 'bg-red-500/10 text-red-500 border-red-500/20' : 'bg-yellow-500/10 text-yellow-500 border-yellow-500/20'
                     }`}>
                       {res.status}
                     </span>
                   </td>
-                  <td className="px-8 py-4 text-right">
+                  <td className="px-8 py-6 text-right">
                     <button
                       onClick={() => handleDelete(res.reservationID!)}
-                      className="text-red-500 hover:text-red-700 font-medium px-3 py-1 rounded-lg hover:bg-red-50 transition-colors"
+                      className="text-red-500 hover:text-red-400 font-bold text-xs uppercase tracking-widest px-4 py-2 rounded-xl hover:bg-red-500/10 transition-all border border-transparent hover:border-red-500/20"
                     >
-                      Cancel
+                      Void
                     </button>
                   </td>
                 </tr>
               ))}
               {reservations.length === 0 && (
                 <tr>
-                  <td colSpan={5} className="px-8 py-12 text-center text-gray-400 italic">
-                    No reservations found.
+                  <td colSpan={5} className="px-8 py-20 text-center text-text-muted italic opacity-50">
+                    No active bookings found in the manifest.
                   </td>
                 </tr>
               )}
