@@ -20,5 +20,36 @@ namespace WebApplication1.Models
 
         public List<ChartPoint> ReservationsPerMonth { get; set; } = new();
         public List<ChartPoint> WorkspaceUsage { get; set; } = new();
+        public AdvancedDashboardInsights Insights { get; set; }
     }
+
+    public class EquipmentHubUsage
+{
+    public string HubName { get; set; }
+    public List<string> EquipmentItems { get; set; }
+}
+
+public class MemberHoursReport
+{
+    public int MemberID { get; set; }
+    public string FullName { get; set; }
+    public string Email { get; set; }
+    public string Company { get; set; }
+    public double TotalReservedHours { get; set; }
+}
+
+public class AdvancedDashboardInsights
+{
+    public string MostPopularWorkspaceType { get; set; }
+
+    public List<string> HubsWithoutReservationsLastMonth { get; set; }
+
+    public string TopEquipmentMember { get; set; }
+
+    public List<string> MembersWithoutReservationsLastMonth { get; set; }
+
+    public List<EquipmentHubUsage> EquipmentUsedPerHub { get; set; }
+
+    public List<MemberHoursReport> MemberHoursReports { get; set; }
+}
 }
