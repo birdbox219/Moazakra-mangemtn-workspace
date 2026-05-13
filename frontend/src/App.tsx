@@ -71,7 +71,7 @@ function AppContent() {
   ];
 
   return (
-    <div className="flex h-screen bg-surface font-body overflow-hidden transition-colors duration-500">
+    <div className="flex h-[100dvh] bg-surface font-body overflow-hidden transition-colors duration-500">
       {/* Mobile Sidebar Overlay */}
       {isSidebarOpen && (
         <div 
@@ -144,7 +144,7 @@ function AppContent() {
       </aside>
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col min-w-0 overflow-hidden relative">
+      <div className="flex-1 flex flex-col min-w-0 relative">
         <header 
           className="h-20 flex items-center px-6 md:px-12 border-b border-border shrink-0 glass relative z-10"
           style={{ WebkitAppRegion: 'drag' } as any}
