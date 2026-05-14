@@ -1,0 +1,21 @@
+{
+  "appId": "com.mozakrah.managementhub",
+  "appName": "Mozakrah Management Hub",
+  "webDir": "../frontend/dist",
+  "server": {
+    "androidScheme": "http"
+  },
+  "backgroundColor": "#0f172a",
+  "plugins": {
+    "Keyboard": {
+      "resize": "body",
+      "style": "dark"
+    },
+    "SplashScreen": {
+      "launchShowDuration": 2000,
+      "backgroundColor": "#0f172a",
+      "showSpinner": true,
+      "androidScaleType": "CENTER_CROP"
+    }
+  }
+}

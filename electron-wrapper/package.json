@@ -1,0 +1,36 @@
+{
+  "name": "workspace-hub-client",
+  "version": "1.0.0",
+  "description": "Mozakrah Management Hub Desktop Client",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder build --win",
+    "pack": "electron-builder --dir"
+  },
+  "build": {
+    "appId": "com.workspacehub.client",
+    "productName": "Mozakrah Management Hub",
+    "directories": {
+      "output": "dist"
+    },
+    "win": {
+      "target": "nsis"
+    },
+    "extraResources": [
+      {
+        "from": "../frontend/dist",
+        "to": "frontend",
+        "filter": ["**/*"]
+      }
+    ],
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
+  },
+  "devDependencies": {
+    "electron": "^30.0.0",
+    "electron-builder": "^24.13.3"
+  }
+}
