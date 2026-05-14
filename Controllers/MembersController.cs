@@ -1,54 +1,71 @@
-﻿using System;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using WindowsFormsApp1.Data;
-using WindowsFormsApp1.Interface;
+using WebApplication1.Interfaces;
+using WebApplication1.Models;
 
-namespace WindowsFormsApp1.Controllers
+namespace WebApplication1.Controllers
 {
-    internal class MembersController : IDataController
+    [ApiController]
+    [Route("api/[controller]")]
+    public class MembersController : ControllerBase
     {
-        private DB _db = new DB();
+        private readonly IMemberService _memberService;
 
-        public DataTable Data { get; private set; }
-        public MembersController()
+        public MembersController(IMemberService memberService)
         {
-            // Constructor logic if needed
+            _memberService = memberService;
         }
 
-        public event EventHandler OnDataRefreshed;
-
-
-        public void RefreshData()
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Member>>> GetMembers()
         {
-            Data= _db.GetMembers();
-
-
-            OnDataRefreshed?.Invoke(this, EventArgs.Empty);
+            var members = await _memberService.GetMembersAsync();
+            return Ok(members);
         }
 
-        public void Add(BaseData data)
+        [HttpPost]
+        public async Task<IActionResult> AddMember([FromBody] Member member)
         {
-            if(data is MemberData member )
-            {
-                _db.AddMember(member.Name, member.Email, member.Company);
-            }
-
-            RefreshData();
+            await _memberService.AddMemberAsync(member);
+            return Ok();
         }
 
-        public void Delte(int id)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateMember(int id, [FromBody] Member member)
         {
-
-            
-            _db.DeleteMember(id);
-            RefreshData();
-
+            member.MemberID = id;
+            await _memberService.UpdateMemberAsync(member);
+            return Ok();
         }
 
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteMember(int id)
+        {
+            await _memberService.DeleteMemberAsync(id);
+            return Ok();
+        }
 
+        [HttpGet("{id}/phones")]
+        public async Task<IActionResult> GetPhones(int id)
+        {
+            var memberPhones = await _memberService.GetMemberPhonesAsync(id);
+            return Ok(memberPhones);
+        }
+        
+        [HttpPost("{id}/phones")]
+        public async Task<IActionResult> AddPhone(int id, [FromBody] MemberPhone phone)
+        {
+            phone.MemberID = id;
+            await _memberService.AddMemberPhoneAsync(phone);
+            return Ok();
+        }
+
+        [HttpDelete("phones/{phoneId}")]
+        public async Task<IActionResult> DeletePhone(int phoneId)
+        {
+            await _memberService.DeleteMemberPhoneAsync(phoneId);
+            return Ok();
+        }
     }
 }

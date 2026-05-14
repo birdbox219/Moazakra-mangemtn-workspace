@@ -1,0 +1,315 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: var(--primary);
+  --color-surface: var(--surface);
+  --color-surface-hover: var(--surface-hover);
+  --color-text-main: var(--text-main);
+  --color-text-muted: var(--text-muted);
+  --color-accent: var(--accent);
+  --color-border: var(--border-color);
+  
+  --font-display: var(--font-display-family);
+  --font-body: var(--font-body-family);
+  
+  --radius-xl: var(--radius-large);
+  --radius-2xl: var(--radius-xlarge);
+}
+
+:root {
+  /* Default Theme (Refined Normal) */
+  --primary: #4f46e5;
+  --surface: #ffffff;
+  --surface-hover: #f9fafb;
+  --text-main: #111827;
+  --text-muted: #6b7280;
+  --accent: #8b5cf6;
+  --border-color: #e5e7eb;
+  --font-display-family: 'Inter', system-ui, sans-serif;
+  --font-body-family: 'Inter', system-ui, sans-serif;
+  --radius-large: 0.75rem;
+  --radius-xlarge: 1rem;
+  --glass-blur: 0px;
+  --glass-opacity: 1;
+}
+
+[data-theme='automata'] {
+  --primary: #dad4bb;
+  --surface: #454238;
+  --surface-hover: #545144;
+  --text-main: #dad4bb;
+  --text-muted: #a6a18d;
+  --accent: #8c8874;
+  --border-color: #545144;
+  --font-display-family: 'Space Grotesk', monospace;
+  --font-body-family: 'Space Grotesk', monospace;
+  --radius-large: 0px;
+  --radius-xlarge: 0px;
+  --glass-blur: 0px;
+  --glass-opacity: 1;
+}
+
+[data-theme='neon'] {
+  --primary: #00f2ff;
+  --surface: rgba(15, 15, 20, 0.7);
+  --surface-hover: rgba(25, 25, 35, 0.8);
+  --text-main: #ffffff;
+  --text-muted: #94a3b8;
+  --accent: #7000ff;
+  --border-color: rgba(255, 255, 255, 0.1);
+  --font-display-family: 'Plus Jakarta Sans', sans-serif;
+  --font-body-family: 'Inter', sans-serif;
+  --radius-large: 1rem;
+  --radius-xlarge: 1.5rem;
+  --glass-blur: 12px;
+  --glass-opacity: 0.8;
+}
+
+[data-theme='cherry'] {
+  --primary: #fb7185;
+  --surface: #fff1f2;
+  --surface-hover: #ffe4e6;
+  --text-main: #881337;
+  --text-muted: #be123c;
+  --accent: #fda4af;
+  --border-color: #fecdd3;
+  --font-display-family: 'Outfit', sans-serif;
+  --font-body-family: 'Outfit', sans-serif;
+  --radius-large: 2rem;
+  --radius-xlarge: 2.5rem;
+}
+
+[data-theme='astral'] {
+  --primary: #10b981;
+  --surface: #061712;
+  --surface-hover: #0a261d;
+  --text-main: #ecfdf5;
+  --text-muted: #6ee7b7;
+  --accent: #34d399;
+  --border-color: #065f46;
+  --font-display-family: 'Lexend', sans-serif;
+  --font-body-family: 'Lexend', sans-serif;
+  --radius-large: 0.5rem;
+  --radius-xlarge: 0.75rem;
+}
+
+[data-theme='synthwave'] {
+  --primary: #ff00ff;
+  --surface: #1a0b2e;
+  --surface-hover: #2d134d;
+  --text-main: #ffffff;
+  --text-muted: #b392f0;
+  --accent: #ff7edb;
+  --border-color: #3d1d6d;
+  --font-display-family: 'Space Grotesk', sans-serif;
+  --font-body-family: 'Inter', sans-serif;
+  --radius-large: 1rem;
+  --radius-xlarge: 1.5rem;
+  --glass-blur: 15px;
+  --glass-opacity: 0.7;
+}
+
+[data-theme='obsidian'] {
+  --primary: #00ff41;
+  --surface: #000000;
+  --surface-hover: #0a0a0a;
+  --text-main: #ffffff;
+  --text-muted: #444444;
+  --accent: #111111;
+  --border-color: #1a1a1a;
+  --font-display-family: 'Space Grotesk', sans-serif;
+  --font-body-family: 'Inter', sans-serif;
+  --radius-large: 4px;
+  --radius-xlarge: 8px;
+}
+
+[data-theme='nordic'] {
+  --primary: #88c0d0;
+  --surface: #eceff4;
+  --surface-hover: #e5e9f0;
+  --text-main: #2e3440;
+  --text-muted: #4c566a;
+  --accent: #81a1c1;
+  --border-color: #d8dee9;
+  --font-display-family: 'Inter', sans-serif;
+  --font-body-family: 'Inter', sans-serif;
+  --radius-large: 0.75rem;
+  --radius-xlarge: 1rem;
+}
+
+[data-theme='terminal'] {
+  --primary: #33ff33;
+  --surface: #0a0c0a;
+  --surface-hover: #121612;
+  --text-main: #33ff33;
+  --text-muted: #1b8a1b;
+  --accent: #ffb000;
+  --border-color: #1b8a1b;
+  --font-display-family: 'Space Grotesk', monospace;
+  --font-body-family: 'Space Grotesk', monospace;
+  --radius-large: 0px;
+  --radius-xlarge: 0px;
+}
+
+[data-theme='abyssal'] {
+  --primary: #00d2ff;
+  --surface: #000c14;
+  --surface-hover: #001625;
+  --text-main: #e0f2f1;
+  --text-muted: #4db6ac;
+  --accent: #3aedff;
+  --border-color: #00253d;
+  --font-display-family: 'Lexend', sans-serif;
+  --font-body-family: 'Lexend', sans-serif;
+  --radius-large: 1.5rem;
+  --radius-xlarge: 2rem;
+  --glass-blur: 20px;
+  --glass-opacity: 0.6;
+}
+
+[data-theme='volcanic'] {
+  --primary: #ff4d00;
+  --surface: #1a1a1a;
+  --surface-hover: #262626;
+  --text-main: #ffffff;
+  --text-muted: #8c8c8c;
+  --accent: #ffcc00;
+  --border-color: #333333;
+  --font-display-family: 'Space Grotesk', sans-serif;
+  --font-body-family: 'Inter', sans-serif;
+  --radius-large: 0px;
+  --radius-xlarge: 4px;
+}
+
+body {
+  background-color: var(--surface);
+  color: var(--text-main);
+  font-family: var(--font-body-family);
+  transition: background-color 0.3s ease, color 0.3s ease;
+  overflow: hidden; /* App Shell handles scrolling */
+  height: 100dvh;
+}
+
+/* Smooth Momentum Scrolling for Touch */
+.overflow-y-auto {
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+  overscroll-behavior-y: contain;
+}
+
+.overflow-x-auto {
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+}
+
+/* Optimize Glassmorphism for Mobile Performance */
+@media (max-width: 768px) {
+  .glass {
+    backdrop-filter: blur(calc(var(--glass-blur) * 0.5));
+    background: var(--surface); /* Fallback to solid if needed */
+  }
+}
+
+/* Fix for mobile address bar jitter */
+html, body, #root {
+  height: 100%;
+  height: 100dvh;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+/* Ensure main content is scrollable and doesn't get stuck */
+main {
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
+  touch-action: pan-y;
+}
+
+/* NieR Scanlines Effect */
+[data-theme='automata']::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+  background-size: 100% 4px, 3px 100%;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.3;
+}
+
+/* Glitch Animation */
+@keyframes glitch {
+  0% { transform: translate(0) }
+  20% { transform: translate(-2px, 2px) }
+  40% { transform: translate(-2px, -2px) }
+  60% { transform: translate(2px, 2px) }
+  80% { transform: translate(2px, -2px) }
+  100% { transform: translate(0) }
+}
+
+.glitch-hover:hover {
+  animation: glitch 0.2s infinite;
+}
+
+/* Glassmorphism Utility */
+.glass {
+  background: var(--surface);
+  backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--border-color);
+}
+
+/* View Transition API styles */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-old(root) {
+  z-index: 1;
+}
+::view-transition-new(root) {
+  z-index: 2147483646;
+}
+
+.dark::view-transition-old(root) {
+  z-index: 2147483646;
+}
+.dark::view-transition-new(root) {
+  z-index: 1;
+}
+
+/* Animation Keyframes */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+.animate-shake {
+  animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both;
+}
+
+/* Electron Support */
+[style*="WebkitAppRegion: drag"] {
+  user-select: none;
+}
+
+.no-drag {
+  -webkit-app-region: no-drag !important;
+}
+
+button, input, select, a, .interactive, .no-drag {
+  -webkit-app-region: no-drag;
+}
+
+/* Scrollbar Hide Utility */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
