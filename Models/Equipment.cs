@@ -11,6 +11,7 @@ namespace WebApplication1.Models
         public static Equipment FromReader(SqlDataReader reader)
         {
             return new Equipment
+            
             {
                 EquipmentID = reader.GetInt32(reader.GetOrdinal("EquipmentID")),
                 Name = reader.GetString(reader.GetOrdinal("Name")),
